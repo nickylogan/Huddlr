@@ -18,8 +18,7 @@ When done, execute the following comand and the app should be working fine and d
 
 ```sh
 $ npm start
-If you are seeing this, everything is working fine!
-Listening on *:3000
+Listening on localhost:3000
 ```
 
 ## Authors
