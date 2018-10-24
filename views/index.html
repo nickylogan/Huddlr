@@ -14,14 +14,14 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
-                    <form action="/" method="post">
+                    <form action="/" method="post" id="landingForm">
                         <div class="form-group">
                             <label for="name">Name <span class="text-danger">*</span></label>
                             <input type="text" name="name" id="name" class="form-control" placeholder="e.g. John Doe"
                                 aria-describedby="help-name">
                             <small id="help-name" class="text-muted">Enter your name</small>
                         </div>
-                        <button id="create" type="button" class="btn btn-primary col-12">Create a new room</button><br>
+                        <button id="createRoom" type="button" class="btn btn-primary col-12">Create a new room</button><br>
                         <hr style="margin-bottom: .25rem">
                         <div style="width: 100%; text-align: center; padding: 0">
                             <small class="text-muted" style="margin: 0; vertical-align: text-top">OR</small>
@@ -30,22 +30,22 @@
                         <h5 style="text-align: center">Join an existing room</h5>
                         <div class="form-group">
                             <div class="custom-control custom-radio">
-                                <input type="radio" id="world" name="room" class="custom-control-input" value="world" checked>
-                                <label class="custom-control-label" for="world">World chat</label>
+                                <input type="radio" id="roomWorld" name="room" class="custom-control-input" value="world" checked>
+                                <label class="custom-control-label" for="roomWorld">World chat</label>
                             </div>
                             <div class="custom-control custom-radio">
-                                <input type="radio" id="private" name="room" class="custom-control-input" value="private">
-                                <label class="custom-control-label" for="private">Join room:</label>
+                                <input type="radio" id="roomPrivate" name="room" class="custom-control-input" value="private">
+                                <label class="custom-control-label" for="roomPrivate">Join room:</label>
                             </div>
                             <div class="custom-control">
                                 <div class="form-group" style="margin-top: 1rem">
-                                    <input type="text" name="room-id" id="room-id" class="form-control" placeholder="e.g. aB12Xy"
-                                        aria-describedby="help-room-id" disabled>
-                                    <small id="help-room-id" class="text-muted">Enter your desired room id <span class="text-danger">*</span></small>
+                                    <input type="text" name="roomID" id="roomID" class="form-control" placeholder="e.g. aB12Xy"
+                                        aria-describedby="help-roomID" disabled>
+                                    <small id="help-roomID" class="text-muted">Enter your desired room id <span class="text-danger">*</span></small>
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-dark col-12">Join!</button>
+                        <button id="joinRoom" type="submit" class="btn btn-dark col-12">Join!</button>
                     </form>
                 </div>
             </div>
