@@ -5,7 +5,8 @@
   "main": "index",
   "typings": "index",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon src/server",
+    "watch": "webpack --progress --watch"
   },
   "repository": {
     "type": "git",
@@ -26,10 +27,18 @@
     "node-sass-middleware": "^0.11.0",
     "path": "^0.12.7",
     "popper.js": "^1.14.4",
-    "socket.io": "^2.1.1",
-    "webpack": "^4.22.0"
+    "socket.io": "^2.1.1"
   },
   "devDependencies": {
-    "nodemon": "^1.18.4"
+    "@babel/core": "^7.1.2",
+    "babel-loader": "^8.0.4",
+    "css-loader": "^1.0.0",
+    "nodemon": "^1.18.4",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.22.0",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-middleware": "^3.4.0",
+    "webpack-hot-middleware": "^2.24.3"
   }
 }
