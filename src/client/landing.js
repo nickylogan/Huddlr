@@ -3,10 +3,10 @@ import $ from 'jquery';
 
 (function () {
     $('#roomWorld').click(() => {
-        $('#room-id').attr('disabled', 'disabled');
+        $('#roomID').attr('disabled', 'disabled');
     });
     $('#roomPrivate').click(() => {
-        $('#room-id').removeAttr('disabled');
+        $('#roomID').removeAttr('disabled');
     });
 
     let form = $('#landingForm');
