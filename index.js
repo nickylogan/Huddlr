@@ -1,10 +1,16 @@
 var express = require('express'),
     mustache = require('mustache-express'),
-    sassMiddleware = require('node-sass-middleware');
-path = require('path');
+    sassMiddleware = require('node-sass-middleware'),
+    path = require('path'),
+    cookieParser = require('cookie-parser');
 
 // Set up app
 app = express();
+
+// Disable template caching on development
+if (app.get('env') === 'development') {
+    app.set('view cache', false);
+}
 
 // Set up templating engine
 app.engine('html', mustache());
@@ -20,20 +26,18 @@ app.use(sassMiddleware({
     prefix: '/public/css',
 }))
 
-// Set up browser-sync middleware
-if (app.get('env') === 'development') {
-    app.set('view cache', false);
-}
+// Set up cookie-parser middleware
+app.use(cookieParser());
 
-// App routes
-app.get('/', function (req, res) {
-    res.render('index', {
-        "name": "World!"
-    });
-});
+// Set up POST data encoding middleware
+app.use(express.json());
+app.use(express.urlencoded());
 
 // Set up static folder
 app.use('/public', express.static(path.join(__dirname, 'public')));
+
+// Set up routes
+app.use('/', require('./routes'));
 
 // Set up http
 var http = require('http').Server(app);
