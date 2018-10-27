@@ -23,7 +23,9 @@ router.get('/room/r/:id(R[A_Za-z0-9]{5})', function(req, res) {
     // if cookie exists, enter room
     // if room invalid, kick from room and redirect to /
     // if not, kick from room and redirect to /
-    res.render('privateRoom');
+    res.render('privateRoom', {
+        roomID: req.params.id
+    });
 });
 
 router.post('/disconnect', function(req, res) {
