@@ -7,7 +7,8 @@ module.exports = {
     entry: {
         landing: './src/client/landing.js',
         worldRoom: './src/client/worldRoom.js',
-        privateRoom: './src/client/privateRoom.js'
+        privateRoom: './src/client/privateRoom.js',
+        server: './src/client/server.js',
     },
     devServer: {
         hot: true,

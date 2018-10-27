@@ -28,6 +28,13 @@ router.get('/room/r/:id(R[A_Za-z0-9]{5})', function(req, res) {
     });
 });
 
+router.get('/server', function(req, res) {
+    // if cookie exists, enter room
+    // if room invalid, kick from room and redirect to /
+    // if not, kick from room and redirect to /
+    res.render('server');
+});
+
 router.post('/disconnect', function(req, res) {
     // clear cookie
     // redirect to index
