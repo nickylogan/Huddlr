@@ -1,0 +1,6 @@
+.index-container {
+    height: 100vh;
+    @extend .d-flex;
+    @extend .align-items-center;
+    @extend .justify-content-center;
+}

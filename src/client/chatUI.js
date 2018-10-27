@@ -20,21 +20,26 @@ class ChatUI {
     constructor(socketCallback) {
         this.socketCallback = socketCallback;
         this.chatInput = $('.chat-msg');
-        this.chatForm = $('.chat-input');
+        this.chatForm = $('.chat-form');
         this.chatSend = $('.chat-send');
-        this.chatWrapper = $('.chat-bubble-wrapper');
+        this.chatWindow = $('#chat-container');
+        this.chatScroll = $('.chat-scroll-bottom');
+        this.userList = $('.user-list');
 
         // Add fontawesome libraries
         library.add(fas, far);
         dom.watch();
 
         // Set up perfect scrollbar
-        this.userList = new PerfectScrollbar('#user-list-container', {
+        this.userListPS = new PerfectScrollbar('#user-list-container', {
             suppressScrollX: true
         });
-        this.chatWindow = new PerfectScrollbar('#chat-container', {
+        this.chatWindowPS = new PerfectScrollbar('#chat-container', {
             suppressScrollX: true
         });
+
+        // Add scrolling state
+        this.scrolling = false;
     }
 
     initialize() {
@@ -61,6 +66,18 @@ class ChatUI {
         this
             .chatForm
             .submit((e) => e.preventDefault());
+        this
+            .chatScroll
+            .click(() => this.scrollToBottom());
+
+        // Add scroll listeners to scrollbar
+        this.chatWindow.on('ps-y-reach-end', () => {
+            this.changeScrollingState(false);
+        });
+
+        this.chatWindow.on('ps-scroll-up', () => {
+            this.changeScrollingState(true);
+        });
 
         return this;
     }
@@ -87,29 +104,48 @@ class ChatUI {
             `<div class="chat-bubble chat-bubble-other hidden"><small class="chat-sender" style="color:${color}">${user}</small><p class="chat-text">${msg}</p><small class="chat-time">${time}</small></div>`;
 
         this
-            .chatWrapper
+            .chatWindow
             .append(el);
 
         setTimeout(() => {
             $('.chat-bubble.hidden').removeClass('hidden');
         }, 5);
 
-        this.chatWindow.update();
+        if (!this.scrolling) {
+            console.log(this.chatWindow.prop('scrollHeight'));
+            this.chatWindow.scrollTop(this.chatWindow.prop('scrollHeight'));
+        }
+        this.chatWindowPS.update();
     }
 
     sendMessage() {
         let msg = this.getMessageInput();
+        if(!msg) return;
         this.clearMessageInput();
         // use callback to send message and cookie
         //
 
         // ONLY FOR UI TESTING! DELETE THESE LATER!
         this.appendMessage({
-            user: 'other',
+            user: Math.round(Math.random()) ? 'self' : 'other',
             message: msg,
             time: utils.getSimpleTime(),
             color: '#000'
         });
+    }
+
+    changeScrollingState(state) {
+        this.scrolling = state;
+        if (state)
+            this.chatScroll.removeClass('hidden');
+        else
+            this.chatScroll.addClass('hidden');
+    }
+
+    scrollToBottom() {
+        this.chatWindow.animate({
+            scrollTop: this.chatWindow.prop('scrollHeight')
+        }, 500);
     }
 }
 

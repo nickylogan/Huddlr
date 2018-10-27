@@ -1,0 +1,197 @@
+.sidebar {
+    height: 100vh;
+    left: 0;
+    @extend .p-0;
+    @extend .position-fixed;
+    @extend .d-flex;
+    @extend .flex-column;
+    @extend .bg-white;
+    @extend .col-sm-3;
+    @extend .border-right;
+    z-index: $zindex-fixed;
+
+    .profile {
+        @extend .d-flex;
+        @extend .p-4;
+        @extend .border-bottom;
+        @extend .align-items-center;
+
+        &-name {
+            @extend .m-0;
+        }
+
+        .signout {
+            @extend .align-self-end;
+            @extend .flex-grow-1;
+        }
+
+        .signout-btn {
+            @extend .btn;
+            @extend .btn-link;
+            @extend .mr-1;
+            @extend .float-right;
+        }
+    }
+
+    #user-list-container {
+        @extend .flex-grow-1;
+        @extend .px-4;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .user-list {
+        @extend .position-relative;
+        @extend .list-unstyled;
+        @extend .pt-2;
+
+        &>li {
+            @extend .py-1;
+            @extend .font-weight-bold;
+            left: 0;
+            transition: left .25s ease-in-out;
+
+            &.hidden {
+                left: -100%;
+            }
+        }
+    }
+
+    .room-name {
+        @extend .p-4;
+        @extend .font-weight-bold;
+    }
+}
+
+.chat {
+    &-input-group {
+        @extend .input-group;
+        @extend .my-3;
+        @extend .px-3;
+    }
+
+    &-window {
+        @extend .p-0;
+        @extend .position-fixed;
+        @extend .d-flex;
+        @extend .flex-column;
+        background: #eeeeee;
+        height: 100vh;
+        right: 0;
+    }
+    
+    &-form {
+        z-index: 1000;
+        background: #eeeeee;
+    }
+
+    &-container {
+        @extend .position-relative;
+        @extend .flex-grow-1;
+        @extend .border-bottom;
+    }
+
+    &-bubble {
+        @extend .my-2;
+        @extend .position-relative;
+        @extend .d-block;
+        min-width: 5em;
+        max-width: 30em;
+        padding: .5em .75em;
+        width: fit-content;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+        border-radius: 2px;
+        transition: transform .125s ease-in-out;
+        z-index: -1;
+
+        &-wrapper {
+            @extend .px-3;
+            @extend .d-flex;
+            @extend .flex-column;
+            @extend .position-absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            overflow-y: hidden;
+        }
+
+        &-self {
+            @extend .pr-3;
+            background: #ddeeff;
+            @extend .ml-auto;
+
+            &.hidden {
+                transform: translateX(calc(100% + 1em));
+            }
+        }
+
+        &-other {
+            @extend .bg-white;
+
+            &.hidden {
+                transform: translateX(calc(-100% - 1em));
+            }
+        }
+
+        .chat-text {
+            @extend .d-inline-block;
+            @extend .my-0;
+            @extend .mr-1;
+        }
+
+        .chat-sender {
+            @extend .font-weight-bold;
+            @extend .d-block;
+        }
+
+        .chat-time {
+            @extend .text-muted;
+        }
+    }
+
+    &-msg {
+        @extend .form-control;
+        @extend .pr-5;
+    }
+
+    &-file {
+        @extend .btn;
+        @extend .btn-link;
+        @extend .position-absolute;
+        @extend .text-secondary;
+        right: 100px;
+        z-index: 1000;
+    }
+
+    &-send {
+        @extend .btn;
+        @extend .btn-info;
+    }
+
+    &-scroll-bottom {
+        @extend .btn;
+        @extend .btn-light;
+        @extend .bg-white;
+        @extend .d-flex;
+        @extend .align-items-center;
+        @extend .justify-content-center;
+        @extend .position-absolute;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+        width: 2em;
+        height: 2em;
+        right: 1em;
+        bottom: 1em;
+        transition: bottom .5s ease-in-out;
+        z-index: 100;
+
+        &.hidden {
+            bottom: -100%;
+        }
+    }
+}
+
+.ps>.ps__rail-y {
+    z-index: 1000;
+    opacity: 0.6;
+}
