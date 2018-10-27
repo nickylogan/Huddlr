@@ -1,0 +1,18 @@
+body {
+    background: #222;
+    @extend .p-1;
+}
+
+.server-log {
+    @extend .list-unstyled;
+    &-container {
+        @extend .p-0;
+        @extend .container-fluid;
+        height: 100vh;
+    }
+    & > li {
+        @extend .text-monospace;
+        @extend .text-white;
+        @extend small;
+    }
+}
