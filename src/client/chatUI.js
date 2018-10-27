@@ -49,7 +49,7 @@ class ChatUI {
                 'show': 500,
                 'hide': 0
             },
-            placement: 'right'
+            placement: 'auto'
         });
 
         // Add event listeners to elements
