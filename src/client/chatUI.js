@@ -103,7 +103,7 @@ class ChatUI {
         // use callback to send message and cookie
         //
 
-        // DELETE THESE LATER!
+        // ONLY FOR UI TESTING! DELETE THESE LATER!
         this.appendMessage({
             user: 'other',
             message: msg,
