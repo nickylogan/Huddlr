@@ -145,7 +145,7 @@ class ChatUI {
     scrollToBottom() {
         this.chatWindow.animate({
             scrollTop: this.chatWindow.prop('scrollHeight')
-        }, 500);
+        }, 120);
     }
 }
 
