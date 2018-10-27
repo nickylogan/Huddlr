@@ -6,16 +6,16 @@ module.exports = {
     mode: 'development',
     entry: {
         landing: './src/client/landing.js',
-        globalRoom: './src/client/room-global.js',
-        privateRoom: './src/client/room-private.js'
+        worldRoom: './src/client/worldRoom.js',
+        privateRoom: './src/client/privateRoom.js'
     },
     devServer: {
         hot: true,
     },
     output: {
         path: path.resolve(__dirname, 'public/assets'),
-        filename: "[name].bundle.js",
         publicPath: '/assets/',
+        filename: "[name].bundle.js",
     },
     module: {
         rules: [{
@@ -24,7 +24,7 @@ module.exports = {
                 loader: 'babel-loader',
             },
             {
-                test: /\.scss$/,
+                test: /\.s?css$/,
                 use: [ MiniCssExtractPlugin.loader, "css-loader", "sass-loader" ]
             }
         ]

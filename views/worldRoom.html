@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Huddlr - World chat</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="worldRoom.bundle.css">
+</head>
+
+<body>
+    <div class="container-fluid" style="padding: 0">
+        <div class="row">
+            <div class="sidebar">
+                <div class="profile">
+                    <h6 class="profile-name">John Doe</h6>
+                    <i class="fas fa-circle fa-xs text-success ml-2"></i>
+                    <form action="disconnect" class="signout" method="post">
+                        <input type="hidden" name="room" value="world">
+                        <button type="submit" class="signout-btn" data-toggle="tooltip" title="Disconnect from room"><i
+                                class="fas fa-sign-out-alt text-danger"></i></button>
+                    </form>
+                </div>
+                <div class="p-4">
+                    <strong>Online users</strong>
+                </div>
+                <div id="user-list-container">
+                    <ul class="user-list">
+                        <li style="color:#0087ff">Alex A.</li>
+                        <li style="color:#ff7800">Benjamin B.</li>
+                        <li style="color:#d90da4">Chloe C.</li>
+                        <li style="color:#22dd33">Daisy D.</li>
+                    </ul>
+                </div>
+                <div class="room-name">
+                    <i class="fas fa-globe mr-3"></i>WORLD CHAT
+                </div>
+            </div>
+            <div class="chat-window col-sm-9">
+                <div class="chat-bubble-wrapper" id="chat-container">
+                </div>
+                <form action="" class="chat-input">
+                    <div class="chat-input-group">
+                        <input type="text" class="chat-msg" placeholder="Enter your message here..." aria-label="Enter your message here..."
+                            aria-describedby="chat-send">
+                        <button class="chat-file" type="button"><i class="fas fa-paperclip"></i></button>
+                        <div class="input-group-append">
+                            <button class="chat-send" type="button">Send <i class="fas fa-paper-plane"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="worldRoom.bundle.js"></script>
+</body>
+
+</html>

@@ -1,5 +1,7 @@
 import url from '../../resources/sass/style.scss';
 import $ from 'jquery';
+import bootstrap from 'bootstrap';
+import popper from 'popper.js';
 
 (function () {
     $('#roomWorld').click(() => {
