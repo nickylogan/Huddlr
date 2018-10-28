@@ -26,6 +26,17 @@ class ServerUI {
         this.serverLogContainer = $('.server-log-container');
 
         this.serverLogContainerPS = new PerfectScrollbar('.server-log-container');
+
+        this.scrolling = false;
+
+        // Add scroll listeners to scrollbar
+        this.serverLogContainer.on('ps-y-reach-end', () => {
+            this.changeScrollingState(false);
+        });
+
+        this.serverLogContainer.on('ps-scroll-up', () => {
+            this.changeScrollingState(true);
+        });
     }
 
     appendLog(log) {
@@ -47,7 +58,18 @@ class ServerUI {
         }
         let el = `<li><span class="text-secondary">${time} </span>${content}</li>`
         this.serverLog.append(el);
+        if(this.serverLog.children('li').length >= 100) {
+            this.serverLog.find('li:first-child').remove();
+        }
+
+        if(!this.scrolling) {
+            this.serverLogContainer.scrollTop(this.serverLogContainer.prop('scrollHeight'));
+        }
         this.serverLogContainerPS.update();
+    }
+
+    changeScrollingState(state) {
+        this.scrolling = state;
     }
 }
 

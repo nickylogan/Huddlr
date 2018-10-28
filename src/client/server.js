@@ -13,8 +13,8 @@ function makeid(length) {
 
     return text;
 }
-for (let i = 1; i <= 100; ++i) {
-    let types = ['connect', 'disconnect', 'chat'];
+for (let i = 1; i <= 10000; ++i) {
+    let types = ['connect', 'chat', 'disconnect'];
     let users = ['Alex', 'Benjamin', 'Chloe', 'Daisy'];
     let data = {
         type: types[Math.round(Math.random() * 2)],
@@ -22,5 +22,7 @@ for (let i = 1; i <= 100; ++i) {
         message: makeid(Math.ceil(Math.random() * 40) + 5),
         room: 'R' + makeid(5),
     }
-    serverUI.appendLog(data);
+    setTimeout(() => {
+        serverUI.appendLog(data);
+    }, 100*i);
 }
