@@ -120,7 +120,7 @@ class ChatUI {
 
     sendMessage() {
         let msg = this.getMessageInput();
-        if(!msg) return;
+        if (!msg) return;
         this.clearMessageInput();
         // use callback to send message and cookie
         //
@@ -146,6 +146,25 @@ class ChatUI {
         this.chatWindow.animate({
             scrollTop: this.chatWindow.prop('scrollHeight')
         }, 120);
+    }
+
+    appendUser(data) {
+        let id = utils.escapeHtml(data.id);
+        let color = utils.escapeHtml(data.color);
+        let name = utils.escapeHtml(data.name);
+        let el = `<li id="${id}" class="hidden" style="color:${color}">${name}</li>`;
+        this.userList.append(el);
+        setTimeout(() => {
+            $('.user-list>li.hidden').removeClass('hidden');
+        }, 5);
+    }
+
+    removeUser(userElementID) {
+        let id = utils.escapeHtml(userElementID);
+        $(`#${id}`).addClass('hidden');
+        setTimeout(() => {
+            $(`#${id}`).remove();
+        }, 250);
     }
 }
 
