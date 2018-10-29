@@ -9,6 +9,7 @@ import 'toastr/build/toastr.css';
     $('#roomWorld').click(() => {
         $('#roomID').prop('disabled', 'true');
         $('#roomID').removeAttr('required');
+        $('#roomID').removeClass('is-invalid');
     });
     $('#roomPrivate').click(() => {
         $('#roomID').removeAttr('disabled');
@@ -21,8 +22,12 @@ import 'toastr/build/toastr.css';
         let valid = true;
         $('input[required]').each(function () {
             if (!$(this).val()) {
-                $(this).addClass('border-danger');
+                $(this).addClass('is-invalid');
+                $(this).removeClass('is-valid');
                 valid = false;
+            } else {
+                $(this).removeClass('is-invalid');
+                $(this).addClass('is-valid');
             }
         });
 
