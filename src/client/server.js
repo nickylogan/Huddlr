@@ -1,26 +1,18 @@
 import ServerUI from './serverUI';
+import * as utils from './utils';
 
 let serverUI = new ServerUI();
 
 
 // THESE ARE UI TESTS, REMOVE THESE LATER
-function makeid(length) {
-    var text = "";
-    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-    for (var i = 0; i < length; i++)
-        text += possible.charAt(Math.floor(Math.random() * possible.length));
-
-    return text;
-}
 for (let i = 1; i <= 10000; ++i) {
     let types = ['connect', 'chat', 'disconnect'];
     let users = ['Alex', 'Benjamin', 'Chloe', 'Daisy'];
     let data = {
-        type: types[Math.round(Math.random() * 2)],
-        user: users[Math.round(Math.random() * 3)],
-        message: makeid(Math.ceil(Math.random() * 40) + 5),
-        room: 'R' + makeid(5),
+        type: types[utils.randomInt(0,2)],
+        user: users[utils.randomInt(0,3)],
+        message: utils.makeid(utils.randomInt(5,40)),
+        room: 'R' + utils.makeid(5),
     }
     setTimeout(() => {
         serverUI.appendLog(data);
