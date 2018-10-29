@@ -40,11 +40,31 @@ export function randomInt(min, max) {
 }
 
 export function randomColor() {
-    let r = randomInt(0, 128);
-    let g = randomInt(0, 128);
-    let b = randomInt(0, 128);
-    r = ('0' + r.toString(16)).slice(-2);
-    g = ('0' + g.toString(16)).slice(-2);
-    b = ('0' + b.toString(16)).slice(-2);
-    return `#${r + g + b}`;
+    let maxSum = 200 * 3;
+    let _1 = Math.min(255, randomInt(0, maxSum));
+    let _2 = Math.min(255, randomInt(0, maxSum - _1));
+    let _3 = Math.min(255, randomInt(0, maxSum - _2 - _1));
+    let arr = [('0' + _1.toString(16)).slice(-2), ('0' + _2.toString(16)).slice(-2), ('0' + _3.toString(16)).slice(-2)];
+    arr = shuffle(arr);
+    return `#${arr[0] + arr[1] + arr[2]}`;
+}
+
+export function shuffle(array) {
+    var currentIndex = array.length,
+        temporaryValue, randomIndex;
+
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        // And swap it with the current element.
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+    }
+
+    return array;
 }
