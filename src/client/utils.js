@@ -40,7 +40,7 @@ export function randomInt(min, max) {
 }
 
 export function randomColor() {
-    let maxSum = 200 * 3;
+    let maxSum = 200 + 128 + 128;
     let _1 = Math.min(255, randomInt(0, maxSum));
     let _2 = Math.min(255, randomInt(0, maxSum - _1));
     let _3 = Math.min(255, randomInt(0, maxSum - _2 - _1));
