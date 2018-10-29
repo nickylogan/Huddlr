@@ -1,10 +1,13 @@
-const
-    express = require('express'),
-    mustache = require('mustache-express'),
-    sassMiddleware = require('node-sass-middleware'),
-    path = require('path'),
-    cookieParser = require('cookie-parser'),
-    webpack = require('webpack');
+import express from 'express';
+import mustache from 'mustache-express';
+import path from 'path';
+import cookieParser from 'cookie-parser';
+import webpack from 'webpack';
+import uuid from 'uuid/v4';
+import session from 'express-session';
+
+import Session from './session';
+import AppController from './controller';
 
 // Set up app
 const app = express();
@@ -26,7 +29,15 @@ app.set('view engine', 'html');
 // app.set('views', path.join(__dirname, '/resources/views'))
 
 // Set up cookie-parser middleware
-app.use(cookieParser());
+app.use(cookieParser('secret'));
+
+// Set up session management middleware
+app.use(session({
+    genid: (req) => uuid(),
+    secret: 'secret',
+    resave: false,
+    saveUninitialized: true
+}));
 
 // Set up POST data encoding middleware
 app.use(express.json());
@@ -35,8 +46,15 @@ app.use(express.urlencoded());
 // Set up static folder
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
+// Set up session data
+let sessionData = new Session();
+
 // Set up routes
-app.use('/', require('./routes'));
+let routes = new AppController(sessionData).intitialize();
+app.use('/', routes.router);
+
+// Set up sockets
+require('./sockets');
 
 // Set up http
 var http = require('http').Server(app);

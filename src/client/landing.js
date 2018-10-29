@@ -19,7 +19,7 @@ import 'toastr/build/toastr.css';
     let form = $('#landingForm');
 
     function validateForm() {
-        let valid = true;
+        var valid = true;
         $('input[required]').each(function () {
             if (!$(this).val()) {
                 $(this).addClass('is-invalid');

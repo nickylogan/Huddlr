@@ -5,7 +5,7 @@
   "main": "index",
   "typings": "index",
   "scripts": {
-    "start": "node src/server",
+    "start": "nodemon .",
     "watch": "webpack --progress --watch"
   },
   "repository": {
@@ -26,17 +26,22 @@
     "bootstrap": "^4.1.3",
     "cookie-parser": "^1.4.3",
     "express": "^4.16.4",
+    "express-session": "^1.15.6",
     "jquery": "^3.3.1",
+    "md5": "^2.2.1",
     "mustache-express": "^1.2.8",
     "node-sass-middleware": "^0.11.0",
     "path": "^0.12.7",
     "perfect-scrollbar": "^1.4.0",
     "popper.js": "^1.14.4",
     "socket.io": "^2.1.1",
-    "toastr": "^2.1.4"
+    "toastr": "^2.1.4",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.1.2",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/register": "^7.0.0",
     "babel-loader": "^8.0.4",
     "css-loader": "^1.0.0",
     "mini-css-extract-plugin": "^0.4.4",
