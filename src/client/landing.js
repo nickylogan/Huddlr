@@ -2,22 +2,45 @@ import url from '../../resources/sass/style.scss';
 import $ from 'jquery';
 import bootstrap from 'bootstrap';
 import popper from 'popper.js';
+import * as Toastr from 'toastr';
+import 'toastr/build/toastr.css';
 
 (function () {
     $('#roomWorld').click(() => {
-        $('#roomID').attr('disabled', 'disabled');
+        $('#roomID').prop('disabled', 'true');
+        $('#roomID').removeAttr('required');
     });
     $('#roomPrivate').click(() => {
         $('#roomID').removeAttr('disabled');
+        $('#roomID').prop('required', 'true');
     });
 
     let form = $('#landingForm');
-    form.submit((e) => form.find('input[name="type"]').length > 0);
-    $('#joinRoom').click( function () {
+
+    function validateForm() {
+        let valid = true;
+        $('input[required]').each(function () {
+            if (!$(this).val()) {
+                $(this).addClass('border-danger');
+                valid = false;
+            }
+        });
+
+        if (!valid) {
+            form.find('input[name="type"]').remove();
+            Toastr.error('Please fill all the required fields', 'Form error');
+        }
+        return valid;
+    }
+    form.submit(function (e) {
+        return validateForm();
+    });
+
+    $('#joinRoom').click(function () {
         form.append($(`<input type="hidden" name="type" value="join">`));
         form.submit();
     });
-    $('#createRoom').click( function () {
+    $('#createRoom').click(function () {
         form.append($(`<input type="hidden" name="type" value="create">`));
         form.submit();
     })

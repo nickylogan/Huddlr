@@ -32,7 +32,8 @@
     "path": "^0.12.7",
     "perfect-scrollbar": "^1.4.0",
     "popper.js": "^1.14.4",
-    "socket.io": "^2.1.1"
+    "socket.io": "^2.1.1",
+    "toastr": "^2.1.4"
   },
   "devDependencies": {
     "@babel/core": "^7.1.2",
