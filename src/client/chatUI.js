@@ -154,6 +154,7 @@ class ChatUI {
         let name = utils.escapeHtml(data.name);
         let el = `<li id="${id}" class="hidden" style="color: rgba(0,0,0,.5)"><i class="fas fa-xs fa-circle mr-3" style="color:${color}"></i>${name}</li>`;
         this.userList.append(el);
+        this.userListPS.update();
         setTimeout(() => {
             $('.user-list>li.hidden').removeClass('hidden');
         }, 5);
