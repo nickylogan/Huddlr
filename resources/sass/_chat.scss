@@ -48,11 +48,12 @@
         &>li {
             @extend .py-1;
             @extend .font-weight-bold;
-            left: 0;
-            transition: left .25s ease-in-out;
+            // @extend .position-absolute;
+            margin-left: 0;
+            transition: margin-left .25s ease-in-out;
 
             &.hidden {
-                left: -100%;
+                margin-left: -100%;
             }
         }
     }
