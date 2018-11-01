@@ -12,7 +12,9 @@
 <body class="server">
     <div class="server-log-container">
        <ul class="server-log">
-           
+           {{#logs}}
+           {{{.}}}
+           {{/logs}}
        </ul> 
     </div>
     <script src="/server.bundle.js"></script>

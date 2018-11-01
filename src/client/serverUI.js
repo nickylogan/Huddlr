@@ -14,7 +14,8 @@ import {
 import PerfectScrollbar from 'perfect-scrollbar';
 import 'perfect-scrollbar/css/perfect-scrollbar.css';
 import '../../resources/sass/style.scss';
-import * as utils from './utils';
+import * as utils from '../utils';
+import * as events from '../events';
 
 class ServerUI {
     constructor() {
@@ -40,27 +41,11 @@ class ServerUI {
     }
 
     appendLog(log) {
-        let time = utils.getTerminalTime();
-        let content = '';
-        switch (log.type) {
-            case 'connect':
-                content = `<span class="text-primary">&lt;&lt;ROOM:${log.room}&gt;&gt;</span> <span class="text-warning">${log.user}</span> has <span class="text-success">connected</span>`;
-                break;
-            case 'disconnect':
-                content = `<span class="text-primary">&lt;&lt;ROOM:${log.room}&gt;&gt;</span> <span class="text-warning">${log.user}</span> has <span class="text-danger">disconnected</span>`;
-                break;
-            case 'chat':
-                content = `<span class="text-primary">&lt;&lt;ROOM:${log.room}&gt;&gt;</span> <span class="text-warning">${log.user}</span> sent message <span class="text-info">"${log.message}"</span>`;
-                break;
-            default:
-                content = `asdf`
-                break;
-        }
-        let el = `<li><span class="text-secondary">${time} </span>${content}</li>`
+        let el = ServerUI.getLogElement(log);
         this.serverLog.append(el);
-        if(this.serverLog.children('li').length >= 100) {
-            this.serverLog.find('li:first-child').remove();
-        }
+        // if(this.serverLog.children('li').length >= 100) {
+        //     this.serverLog.find('li:first-child').remove();
+        // }
 
         if(!this.scrolling) {
             this.serverLogContainer.scrollTop(this.serverLogContainer.prop('scrollHeight'));
@@ -70,6 +55,35 @@ class ServerUI {
 
     changeScrollingState(state) {
         this.scrolling = state;
+    }
+
+    /**
+     * @param {Object} log
+     * @param {String} log.time
+     * @param {String} log.type
+     * @param {String} log.user
+     * @param {String} log.message
+     * @param {String} log.room
+     */
+    static getLogElement(log) {
+        let time = log.time;
+        let content = '';
+        switch (log.type) {
+            case events.SERVER_CONNECT:
+                content = `<span class="text-primary">&lt;&lt;ROOM:${log.room}&gt;&gt;</span> <span class="text-warning">${log.user}</span> has <span class="text-success">connected</span>`;
+                break;
+            case events.SERVER_DISCONNECT:
+                content = `<span class="text-primary">&lt;&lt;ROOM:${log.room}&gt;&gt;</span> <span class="text-warning">${log.user}</span> has <span class="text-danger">disconnected</span>`;
+                break;
+            case events.SERVER_CHAT:
+                content = `<span class="text-primary">&lt;&lt;ROOM:${log.room}&gt;&gt;</span> <span class="text-warning">${log.user}</span> sent message <span class="text-info">"${log.message}"</span>`;
+                break;
+            default:
+                content = `asdf`
+                break;
+        }
+        let el = `<li><span class="text-secondary">${time} </span>${content}</li>`;
+        return el;
     }
 }
 

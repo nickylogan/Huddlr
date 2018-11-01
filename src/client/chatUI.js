@@ -14,7 +14,7 @@ import {
 import PerfectScrollbar from 'perfect-scrollbar';
 import 'perfect-scrollbar/css/perfect-scrollbar.css';
 import '../../resources/sass/style.scss';
-import * as utils from './utils';
+import * as utils from '../utils';
 
 class ChatUI {
     constructor(socketCallback) {
@@ -122,16 +122,13 @@ class ChatUI {
         let msg = this.getMessageInput();
         if (!msg) return;
         this.clearMessageInput();
-        // use callback to send message and cookie
-        //
-
-        // ONLY FOR UI TESTING! DELETE THESE LATER!
         this.appendMessage({
-            user: Math.round(Math.random()) ? 'self' : 'other',
+            user: 'self',
             message: msg,
             time: utils.getSimpleTime(),
             color: '#000'
         });
+        this.socketCallback(msg);
     }
 
     changeScrollingState(state) {
@@ -149,7 +146,7 @@ class ChatUI {
     }
 
     appendUser(data) {
-        let id = utils.escapeHtml(data.id);
+        let id = utils.escapeHtml(data.elementID);
         let color = utils.escapeHtml(data.color);
         let name = utils.escapeHtml(data.name);
         let el = `<li id="${id}" class="hidden" style="color: rgba(0,0,0,.5)"><i class="fas fa-xs fa-circle mr-3" style="color:${color}"></i>${name}</li>`;

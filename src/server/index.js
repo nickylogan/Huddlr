@@ -4,10 +4,11 @@ import path from 'path';
 import cookieParser from 'cookie-parser';
 import webpack from 'webpack';
 import uuid from 'uuid/v4';
-import session from 'express-session';
+import expressSession from 'express-session';
 
-import Session from './session';
+import SessionData from './sessionData';
 import AppController from './controller';
+import Socket from './sockets';
 
 // Set up app
 const app = express();
@@ -32,12 +33,13 @@ app.set('view engine', 'html');
 app.use(cookieParser('secret'));
 
 // Set up session management middleware
-app.use(session({
+var session = expressSession({
     genid: (req) => uuid(),
     secret: 'secret',
     resave: false,
     saveUninitialized: true
-}));
+});
+app.use(session);
 
 // Set up POST data encoding middleware
 app.use(express.json());
@@ -47,18 +49,18 @@ app.use(express.urlencoded());
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
 // Set up session data
-let sessionData = new Session();
+let sessionData = new SessionData();
 
 // Set up routes
 let routes = new AppController(sessionData).intitialize();
 app.use('/', routes.router);
 
-// Set up sockets
-require('./sockets');
-
 // Set up http
 var http = require('http').Server(app);
 var port = process.env.PORT || 3000;
+
+// Set up sockets
+let sockets = new Socket(http, session, sessionData).initialize();
 
 http.listen(port, function () {
     console.log('Listening on localhost:' + port);

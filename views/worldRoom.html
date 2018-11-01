@@ -27,6 +27,9 @@
                 </div>
                 <div id="user-list-container">
                     <ul class="user-list">
+                        {{#users}}
+                        <li id="{{elementID}}" style="color: rgba(0,0,0,.5)"><i class="fas fa-xs fa-circle mr-3" style="color:{{color}}"></i>{{name}}</li>
+                        {{/users}}
                     </ul>
                 </div>
                 <div class="room-name">

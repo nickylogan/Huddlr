@@ -1,11 +1,12 @@
-import Session from './session';
-import * as utils from './utils';
+import SessionData from './sessionData';
+import * as utils from '../utils';
+import * as events from '../events';
 import md5 from 'md5';
 
 export default class AppController {
 
     /**
-     * @param {Session} session
+     * @param {SessionData} session
      */
     constructor(session) {
         this._router = require('express').Router();
@@ -60,8 +61,13 @@ export default class AppController {
     WorldGet(req, res, next) {
         let name = req.session.name;
         if (name) {
+            let users = this.session.getUsersInRoomExcept('world', req.sessionID);
+            // console.log("####");
+            console.log(users);
+            // console.log("####");
             res.render('worldRoom', {
-                name: req.session.name
+                name: req.session.name,
+                users: users,
             });
         } else {
             res.redirect('/');
@@ -88,11 +94,13 @@ export default class AppController {
     }
 
     ServerGet(req, res, next) {
-        res.render('server');
+        console.log(this.session.logs());
+        let elements = this.session.logs().map(log => this.getLogElement(log));
+        res.render('server', {logs: elements});
     }
 
     Disconnect(req, res, next) {
-        delete req.session.name;
+        this.session.removeUserSession(req.sessionID);
         res.redirect('/');
     }
 
@@ -115,6 +123,35 @@ export default class AppController {
         }
         this.session.addRoom(roomID);
         return roomID;
+    }
+
+    /**
+     * @param {Object} log
+     * @param {String} log.time
+     * @param {String} log.type
+     * @param {String} log.user
+     * @param {String} log.message
+     * @param {String} log.room
+     */
+    getLogElement(log) {
+        let time = log.time;
+        let content = '';
+        switch (log.type) {
+            case events.SERVER_CONNECT:
+                content = `<span class="text-primary">&lt;&lt;ROOM:${log.room}&gt;&gt;</span> <span class="text-warning">${log.user}</span> has <span class="text-success">connected</span>`;
+                break;
+            case events.SERVER_DISCONNECT:
+                content = `<span class="text-primary">&lt;&lt;ROOM:${log.room}&gt;&gt;</span> <span class="text-warning">${log.user}</span> has <span class="text-danger">disconnected</span>`;
+                break;
+            case events.SERVER_CHAT:
+                content = `<span class="text-primary">&lt;&lt;ROOM:${log.room}&gt;&gt;</span> <span class="text-warning">${log.user}</span> sent message <span class="text-info">"${log.message}"</span>`;
+                break;
+            default:
+                content = `asdf`
+                break;
+        }
+        let el = `<li><span class="text-secondary">${time} </span>${content}</li>`;
+        return el;
     }
 
     get router() {
