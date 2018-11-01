@@ -2,15 +2,17 @@ import SessionData from './sessionData';
 import * as utils from '../utils';
 import * as events from '../events';
 import md5 from 'md5';
+import ip from 'ip';
 
 export default class AppController {
 
     /**
      * @param {SessionData} session
      */
-    constructor(session) {
+    constructor(session, port) {
         this._router = require('express').Router();
         this.session = session;
+        this.port = port;
     }
 
     /**
@@ -57,7 +59,7 @@ export default class AppController {
             res.redirect('/');
         }
     }
-    
+
     WorldGet(req, res, next) {
         let name = req.session.name;
         if (name) {
@@ -78,10 +80,10 @@ export default class AppController {
         console.log("Get called");
         let roomID = req.params.id;
         let name = req.session.name;
-        if(!name) {
+        if (!name) {
             res.redirect('/');
         }
-        if(this.isValidRoomID(roomID)) {
+        if (this.isValidRoomID(roomID)) {
             console.log("Room valid");
             res.render('privateRoom', {
                 name: req.session.name,
@@ -96,7 +98,11 @@ export default class AppController {
     ServerGet(req, res, next) {
         console.log(this.session.logs());
         let elements = this.session.logs().map(log => this.getLogElement(log));
-        res.render('server', {logs: elements});
+        res.render('server', {
+            logs: elements,
+            ip: ip.address('private', 'ipv4'),
+            port: this.port,
+        });
     }
 
     Disconnect(req, res, next) {
@@ -118,7 +124,7 @@ export default class AppController {
      */
     createRoom() {
         let roomID = '';
-        while(this.session.getRoom(roomID = `R${utils.makeid(5)}`)) {
+        while (this.session.getRoom(roomID = `R${utils.makeid(5)}`)) {
             console.log(roomID);
         }
         this.session.addRoom(roomID);

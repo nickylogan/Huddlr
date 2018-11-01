@@ -48,16 +48,17 @@ app.use(express.urlencoded());
 // Set up static folder
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
-// Set up session data
-let sessionData = new SessionData();
-
-// Set up routes
-let routes = new AppController(sessionData).intitialize();
-app.use('/', routes.router);
 
 // Set up http
 var http = require('http').Server(app);
 var port = process.env.PORT || 3000;
+
+// Set up session data
+let sessionData = new SessionData();
+
+// Set up routes
+let routes = new AppController(sessionData, port).intitialize();
+app.use('/', routes.router);
 
 // Set up sockets
 let sockets = new Socket(http, session, sessionData).initialize();

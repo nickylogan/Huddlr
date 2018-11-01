@@ -10,6 +10,10 @@
 </head>
 
 <body class="server">
+    <div class="server-info">
+        <h5 class="server-info-ip">IP Address: {{ ip }}</h5>
+        <h5 class="server-info-port">Port: {{ port }}</h5>
+    </div>
     <div class="server-log-container">
        <ul class="server-log">
            {{#logs}}
