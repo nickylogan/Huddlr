@@ -155,14 +155,33 @@ class ChatUI {
         setTimeout(() => {
             $('.user-list>li.hidden').removeClass('hidden');
         }, 5);
+
+        this.chatWindow.append(`<div class="chat-connection">
+        <small>${name} has connected</small>
+    </div>`);
+        if (!this.scrolling) {
+            console.log(this.chatWindow.prop('scrollHeight'));
+            this.chatWindow.scrollTop(this.chatWindow.prop('scrollHeight'));
+        }
+        this.chatWindowPS.update();
     }
 
-    removeUser(userElementID) {
-        let id = utils.escapeHtml(userElementID);
+    removeUser(data) {
+        let id = utils.escapeHtml(data.elementID);
+        let name = utils.escapeHtml(data.name);
         $(`#${id}`).addClass('hidden');
         setTimeout(() => {
             $(`#${id}`).remove();
         }, 250);
+
+        this.chatWindow.append(`<div class="chat-connection">
+        <small>${name} has disconnected</small>
+    </div>`);
+        if (!this.scrolling) {
+            console.log(this.chatWindow.prop('scrollHeight'));
+            this.chatWindow.scrollTop(this.chatWindow.prop('scrollHeight'));
+        }
+        this.chatWindowPS.update();
     }
 }
 

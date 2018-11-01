@@ -12,8 +12,8 @@ socket.on(events.CHAT_CONNECT, function(user) {
     chatUI.appendUser(user);
 })
 
-socket.on(events.CHAT_DISCONNECT, function(userElementID) {
-    chatUI.removeUser(userElementID);
+socket.on(events.CHAT_DISCONNECT, function(user) {
+    chatUI.removeUser(user);
 })
 
 socket.on(events.CHAT_MESSAGE, function(msg) {

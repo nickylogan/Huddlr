@@ -58,7 +58,7 @@ export default class Socket {
 
                 socket.on('disconnect', () => {
                     this.sessionData.removeUserFromRoom(sessionID, 'world');
-                    socket.broadcast.emit(events.CHAT_DISCONNECT, user.elementID);
+                    socket.broadcast.emit(events.CHAT_DISCONNECT, user);
                     this.broadcastServerLog({
                         type: events.SERVER_DISCONNECT,
                         user: user.name,

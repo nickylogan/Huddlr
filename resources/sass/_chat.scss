@@ -92,6 +92,17 @@
         @extend .border-bottom;
     }
 
+    &-connection {
+        @extend .text-muted;
+        @extend .d-block;
+        @extend .text-center;
+        @extend .my-2;
+        background: rgba(0, 0, 0, 0.05);
+        small {
+            @extend .align-text-top;
+        }
+    }
+
     &-bubble {
         @extend .my-2;
         @extend .position-relative;
