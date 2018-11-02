@@ -15,6 +15,8 @@ import PerfectScrollbar from 'perfect-scrollbar';
 import 'perfect-scrollbar/css/perfect-scrollbar.css';
 import '../../resources/sass/style.scss';
 import * as utils from '../utils';
+import dropify from 'dropify';
+import 'dropify/dist/js/dropify.js';
 
 class ChatUI {
     constructor(socketCallback) {
@@ -25,6 +27,8 @@ class ChatUI {
         this.chatWindow = $('#chat-container');
         this.chatScroll = $('.chat-scroll-bottom');
         this.userList = $('.user-list');
+        this.fileButton = $('.chat-file');
+        this.fileInput = $('.file-input');
 
         // Add fontawesome libraries
         library.add(fas, far);
@@ -78,6 +82,8 @@ class ChatUI {
         this.chatWindow.on('ps-scroll-up', () => {
             this.changeScrollingState(true);
         });
+
+        this.fileInput.dropify();
 
         return this;
     }

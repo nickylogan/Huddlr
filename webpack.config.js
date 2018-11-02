@@ -26,13 +26,19 @@ module.exports = {
             },
             {
                 test: /\.s?css$/,
-                use: [ MiniCssExtractPlugin.loader, "css-loader", "sass-loader" ]
+                use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"]
+            },
+            {
+                test: /\.(png|woff|woff2|eot|ttf|svg)$/,
+                loader: 'url-loader?limit=100000'
             }
         ]
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoEmitOnErrorsPlugin(),
-        new MiniCssExtractPlugin({ filename: "[name].bundle.css" })
+        new MiniCssExtractPlugin({
+            filename: "[name].bundle.css"
+        })
     ]
 }

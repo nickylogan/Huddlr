@@ -17,7 +17,6 @@ socket.on(events.CHAT_DISCONNECT, function(user) {
 })
 
 socket.on(events.CHAT_MESSAGE, function(msg) {
-    console.log(msg);
     chatUI.appendMessage(msg);
 })
 
