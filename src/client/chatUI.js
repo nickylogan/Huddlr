@@ -16,11 +16,14 @@ import 'perfect-scrollbar/css/perfect-scrollbar.css';
 import '../../resources/sass/style.scss';
 import * as utils from '../utils';
 import dropify from 'dropify';
-import 'dropify/dist/js/dropify.js';
+import ClientSocket from './clientSocket';
 
 class ChatUI {
-    constructor(socketCallback) {
-        this.socketCallback = socketCallback;
+    /**
+     * @param {ClientSocket} socket;
+     */
+    constructor(socket) {
+        this.socket = socket;
         this.chatInput = $('.chat-msg');
         this.chatForm = $('.chat-form');
         this.chatSend = $('.chat-send');
@@ -29,6 +32,7 @@ class ChatUI {
         this.userList = $('.user-list');
         this.fileButton = $('.chat-file');
         this.fileInput = $('.file-input');
+        this.sendFile = $('#sendFile');
 
         // Add fontawesome libraries
         library.add(fas, far);
@@ -85,6 +89,16 @@ class ChatUI {
 
         this.fileInput.dropify();
 
+        this.fileInput.change(() => {
+            console.log(this.fileInput.prop('files'));
+        });
+
+        this.sendFile.click((e) => {
+            let file = this.fileInput.prop('files')[0];
+            console.log(file);
+            this.sendFile(file);
+        });
+
         return this;
     }
 
@@ -134,7 +148,7 @@ class ChatUI {
             time: utils.getSimpleTime(),
             color: '#000'
         });
-        this.socketCallback(msg);
+        this.socket.sendMessage(msg);
     }
 
     changeScrollingState(state) {
@@ -188,6 +202,13 @@ class ChatUI {
             this.chatWindow.scrollTop(this.chatWindow.prop('scrollHeight'));
         }
         this.chatWindowPS.update();
+    }
+
+    /**
+     * @param {File} file
+     */
+    sendFile(file) {
+
     }
 }
 

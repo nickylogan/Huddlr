@@ -3,23 +3,17 @@ import $ from 'jquery';
 import * as utils from '../utils';
 import * as events from '../events';
 import io from 'socket.io-client';
+import ClientSocket from './clientSocket';
 
-let chatUI = new ChatUI(broadcast).initialize();
+let socket = new ClientSocket('/world');
+let chatUI = new ChatUI(socket).initialize();
 
-var socket = io('/world');
-
-socket.on(events.CHAT_CONNECT, function(user) {
-    chatUI.appendUser(user);
-})
-
-socket.on(events.CHAT_DISCONNECT, function(user) {
-    chatUI.removeUser(user);
-})
-
-socket.on(events.CHAT_MESSAGE, function(msg) {
-    chatUI.appendMessage(msg);
-})
-
-function broadcast(message) {
-    socket.emit(events.CHAT_MESSAGE, message);
-}
+socket.setConnectCallback(function (user) {
+    chatUI.appendUser(user)
+});
+socket.setDisconnectCallback(function (user) {
+    chatUI.removeUser(user)
+});
+socket.setMessageCallback(function (msg) {
+    chatUI.appendMessage(msg)
+});
