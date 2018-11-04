@@ -22,7 +22,9 @@ export default class AppController {
         this._router.get('/', this.RootGet.bind(this));
         this._router.post('/', this.RootPost.bind(this));
         this._router.get('/world', this.WorldGet.bind(this));
+        this._router.get('/world/files/:fileName', this.Download.bind(this));
         this._router.get('/room/r/:id', this.PrivateGet.bind(this));
+        this._router.get('/room/r/:id/files/:fileName', this.Download.bind(this));
         this._router.get('/server', this.ServerGet.bind(this));
         this._router.post('/disconnect', this.Disconnect.bind(this));
         return this;
@@ -107,6 +109,12 @@ export default class AppController {
     Disconnect(req, res, next) {
         this.storage.removeUserSession(req.sessionID);
         res.redirect('/');
+    }
+
+    Download(req, res, next) {
+        let fileName = req.params.fileName;
+        let file = __dirname + `/../../upload/${fileName}`;
+        res.download(file);
     }
 
     /**
