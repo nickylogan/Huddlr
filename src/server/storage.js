@@ -1,9 +1,19 @@
-let SessionData = function () {
+let Storage = function () {
     var users = {};
     var rooms = {
         world: new Set()
     };
     var logs = [];
+    var files = {};
+    var struct = {
+        name: null,
+        type: null,
+        alias: null,
+        size: 0,
+        data: [],
+        slice: 0,
+        buffer: null,
+    };
 
     /**
      * @param {String} sessionID
@@ -106,6 +116,28 @@ let SessionData = function () {
     this.logs = function () {
         return logs;
     }
+
+    this.storeFileSlice = (data) => {
+        if (!files[data.name]) {
+            files[data.name] = Object.assign({}, struct, data);
+            files[data.name].data = [];
+        }
+
+        //convert the ArrayBuffer to Buffer 
+        data.data = new Buffer(new Uint8Array(data.data));
+
+        //save the data 
+        files[data.name].data.push(data.data);
+        files[data.name].slice++;
+    }
+
+    this.fileIsComplete = (name) => {
+        return files[name].slice * 100000 >= files[name].size;
+    }
+
+    this.getCurrentFileSlice = (name) => {
+        return files[name].slice;
+    }
 }
 
-export default SessionData;
+export default Storage;

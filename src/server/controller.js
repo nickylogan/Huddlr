@@ -1,4 +1,4 @@
-import SessionData from './sessionData';
+import Storage from './storage';
 import * as utils from '../utils';
 import * as events from '../events';
 import md5 from 'md5';
@@ -7,11 +7,11 @@ import ip from 'ip';
 export default class AppController {
 
     /**
-     * @param {SessionData} session
+     * @param {Storage} storage
      */
-    constructor(session, port) {
+    constructor(storage, port) {
         this._router = require('express').Router();
-        this.session = session;
+        this.storage = storage;
         this.port = port;
     }
 
@@ -34,8 +34,8 @@ export default class AppController {
 
     RootPost(req, res, next) {
         req.session.name = req.body.name;
-        this.session.removeUserSession(req.sessionID);
-        this.session.addUserSession(req.sessionID, {
+        this.storage.removeUserSession(req.sessionID);
+        this.storage.addUserSession(req.sessionID, {
             name: req.body.name,
             color: utils.randomColor(),
             elementID: md5(req.sessionID),
@@ -51,11 +51,11 @@ export default class AppController {
                 let roomID = req.body.roomID;
                 res.redirect(`room/r/${roomID}`);
             } else {
-                this.session.removeUserSession(req.sessionID);
+                this.storage.removeUserSession(req.sessionID);
                 res.redirect('/');
             }
         } else {
-            this.session.removeUserSession(req.sessionID);
+            this.storage.removeUserSession(req.sessionID);
             res.redirect('/');
         }
     }
@@ -63,7 +63,7 @@ export default class AppController {
     WorldGet(req, res, next) {
         let name = req.session.name;
         if (name) {
-            let users = this.session.getUsersInRoomExcept('world', req.sessionID);
+            let users = this.storage.getUsersInRoomExcept('world', req.sessionID);
             // console.log("####");
             console.log(users);
             // console.log("####");
@@ -96,8 +96,7 @@ export default class AppController {
     }
 
     ServerGet(req, res, next) {
-        console.log(this.session.logs());
-        let elements = this.session.logs().map(log => this.getLogElement(log));
+        let elements = this.storage.logs().map(log => this.getLogElement(log));
         res.render('server', {
             logs: elements,
             ip: ip.address('private', 'ipv4'),
@@ -106,7 +105,7 @@ export default class AppController {
     }
 
     Disconnect(req, res, next) {
-        this.session.removeUserSession(req.sessionID);
+        this.storage.removeUserSession(req.sessionID);
         res.redirect('/');
     }
 
@@ -116,7 +115,7 @@ export default class AppController {
      */
     isValidRoomID(roomID) {
         let valid = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        return roomID.match(/R[A-za-z0-9]{5}/) != undefined && this.session.getRoom(roomID) != undefined;
+        return roomID.match(/R[A-za-z0-9]{5}/) != undefined && this.storage.getRoom(roomID) != undefined;
     }
 
     /**
@@ -124,10 +123,10 @@ export default class AppController {
      */
     createRoom() {
         let roomID = '';
-        while (this.session.getRoom(roomID = `R${utils.makeid(5)}`)) {
+        while (this.storage.getRoom(roomID = `R${utils.makeid(5)}`)) {
             console.log(roomID);
         }
-        this.session.addRoom(roomID);
+        this.storage.addRoom(roomID);
         return roomID;
     }
 

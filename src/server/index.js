@@ -5,10 +5,13 @@ import cookieParser from 'cookie-parser';
 import webpack from 'webpack';
 import uuid from 'uuid/v4';
 import expressSession from 'express-session';
+import socketio from 'socket.io';
 
-import SessionData from './sessionData';
+import Storage from './storage';
 import AppController from './controller';
-import Socket from './sockets';
+import ChatSocket from './chatSocket'
+import ServerSocket from './serverSocket';
+import PrivateChatSocket from './privateChatSocket';
 
 // Set up app
 const app = express();
@@ -53,15 +56,22 @@ app.use('/public', express.static(path.join(__dirname, 'public')));
 var http = require('http').Server(app);
 var port = process.env.PORT || 3000;
 
-// Set up session data
-let sessionData = new SessionData();
+// Set up storage
+let storage = new Storage();
 
 // Set up routes
-let routes = new AppController(sessionData, port).intitialize();
+let routes = new AppController(storage, port).intitialize();
 app.use('/', routes.router);
 
 // Set up sockets
-let sockets = new Socket(http, session, sessionData).initialize();
+let io = socketio(http);
+io.use(function (socket, next) {
+    session(socket.request, socket.request.res, next);
+});
+
+let serverSocket = new ServerSocket(io, storage);
+let worldSocket = new ChatSocket(io, storage, 'world', serverSocket.broadcastServerLog).initialize();
+let privateSocket = new PrivateChatSocket(io, storage, 'private', serverSocket.broadcastServerLog).initialize();
 
 http.listen(port, function () {
     console.log('Listening on localhost:' + port);

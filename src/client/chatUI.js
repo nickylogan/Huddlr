@@ -18,39 +18,39 @@ import * as utils from '../utils';
 import dropify from 'dropify';
 import ClientSocket from './clientSocket';
 
-class ChatUI {
-    /**
-     * @param {ClientSocket} socket;
-     */
-    constructor(socket) {
-        this.socket = socket;
-        this.chatInput = $('.chat-msg');
-        this.chatForm = $('.chat-form');
-        this.chatSend = $('.chat-send');
-        this.chatWindow = $('#chat-container');
-        this.chatScroll = $('.chat-scroll-bottom');
-        this.userList = $('.user-list');
-        this.fileButton = $('.chat-file');
-        this.fileInput = $('.file-input');
-        this.sendFile = $('#sendFile');
+/**
+ * @param {ClientSocket} socket;
+ */
+var ChatUI = function (socket) {
+    var socket = socket;
+    var chatInput = $('.chat-msg');
+    var chatForm = $('.chat-form');
+    var chatSend = $('.chat-send');
+    var chatWindow = $('#chat-container');
+    var chatScroll = $('.chat-scroll-bottom');
+    var userList = $('.user-list');
+    var fileInput = $('.file-input');
+    var sendFile = $('#sendFile');
+    var tempFile = null;
+    var tempFileName = '';
+    var fileReader = null;
 
-        // Add fontawesome libraries
-        library.add(fas, far);
-        dom.watch();
+    // Add fontawesome libraries
+    library.add(fas, far);
+    dom.watch();
 
-        // Set up perfect scrollbar
-        this.userListPS = new PerfectScrollbar('#user-list-container', {
-            suppressScrollX: true
-        });
-        this.chatWindowPS = new PerfectScrollbar('#chat-container', {
-            suppressScrollX: true
-        });
+    // Set up perfect scrollbar
+    var userListPS = new PerfectScrollbar('#user-list-container', {
+        suppressScrollX: true
+    });
+    var chatWindowPS = new PerfectScrollbar('#chat-container', {
+        suppressScrollX: true
+    });
 
-        // Add scrolling state
-        this.scrolling = false;
-    }
+    // Add scrolling state
+    var scrolling = false;
 
-    initialize() {
+    this.initialize = () => {
         // Set up tooltips
         $('[data-toggle="tooltip"]').tooltip({
             delay: {
@@ -61,60 +61,51 @@ class ChatUI {
         });
 
         // Add event listeners to elements
-        this
-            .chatSend
+        chatSend
             .click(() => this.sendMessage());
-        this
-            .chatInput
+        chatInput
             .keypress((e) => {
                 if (e.key == 'Enter') {
                     this.sendMessage();
                 }
             });
-        this
-            .chatForm
+        chatForm
             .submit((e) => e.preventDefault());
-        this
-            .chatScroll
+        chatScroll
             .click(() => this.scrollToBottom());
 
         // Add scroll listeners to scrollbar
-        this.chatWindow.on('ps-y-reach-end', () => {
+        chatWindow.on('ps-y-reach-end', () => {
             this.changeScrollingState(false);
         });
 
-        this.chatWindow.on('ps-scroll-up', () => {
+        chatWindow.on('ps-scroll-up', () => {
             this.changeScrollingState(true);
         });
 
-        this.fileInput.dropify();
+        fileInput.dropify();
 
-        this.fileInput.change(() => {
-            console.log(this.fileInput.prop('files'));
-        });
-
-        this.sendFile.click((e) => {
-            let file = this.fileInput.prop('files')[0];
-            console.log(file);
+        sendFile.click((e) => {
+            let file = this.getFile();
             this.sendFile(file);
         });
 
         return this;
     }
 
-    getMessageInput() {
-        return this
-            .chatInput
-            .val();
+    this.getMessageInput = () => {
+        return chatInput.val();
     }
 
-    clearMessageInput() {
-        this
-            .chatInput
-            .val('');
+    this.clearMessageInput = () => {
+        chatInput.val('');
     }
 
-    appendMessage(data) {
+    this.getFile = () => {
+        return fileInput.prop('files')[0];
+    }
+
+    this.appendMessage = (data) => {
         let user = utils.escapeHtml(data.user);
         let msg = utils.escapeHtml(data.message);
         let time = utils.escapeHtml(data.time);
@@ -123,22 +114,20 @@ class ChatUI {
             `<div class="chat-bubble chat-bubble-self hidden"><p class="chat-text">${msg}</p><small class="chat-time">${time}</small></div>` :
             `<div class="chat-bubble chat-bubble-other hidden"><small class="chat-sender" style="color:${color}">${user}</small><p class="chat-text">${msg}</p><small class="chat-time">${time}</small></div>`;
 
-        this
-            .chatWindow
-            .append(el);
+        chatWindow.append(el);
 
         setTimeout(() => {
             $('.chat-bubble.hidden').removeClass('hidden');
         }, 5);
 
-        if (!this.scrolling) {
-            console.log(this.chatWindow.prop('scrollHeight'));
-            this.chatWindow.scrollTop(this.chatWindow.prop('scrollHeight'));
+        if (!scrolling) {
+            console.log(chatWindow.prop('scrollHeight'));
+            chatWindow.scrollTop(chatWindow.prop('scrollHeight'));
         }
-        this.chatWindowPS.update();
+        chatWindowPS.update();
     }
 
-    sendMessage() {
+    this.sendMessage = () => {
         let msg = this.getMessageInput();
         if (!msg) return;
         this.clearMessageInput();
@@ -148,45 +137,43 @@ class ChatUI {
             time: utils.getSimpleTime(),
             color: '#000'
         });
-        this.socket.sendMessage(msg);
+        socket.sendMessage(msg);
     }
 
-    changeScrollingState(state) {
-        this.scrolling = state;
+    this.changeScrollingState = (state) => {
+        scrolling = state;
         if (state)
-            this.chatScroll.removeClass('hidden');
+            chatScroll.removeClass('hidden');
         else
-            this.chatScroll.addClass('hidden');
+            chatScroll.addClass('hidden');
     }
 
-    scrollToBottom() {
-        this.chatWindow.animate({
-            scrollTop: this.chatWindow.prop('scrollHeight')
+    this.scrollToBottom = () => {
+        chatWindow.animate({
+            scrollTop: chatWindow.prop('scrollHeight')
         }, 120);
     }
 
-    appendUser(data) {
+    this.appendUser = (data) => {
         let id = utils.escapeHtml(data.elementID);
         let color = utils.escapeHtml(data.color);
         let name = utils.escapeHtml(data.name);
         let el = `<li id="${id}" class="hidden" style="color: rgba(0,0,0,.5)"><i class="fas fa-xs fa-circle mr-3" style="color:${color}"></i>${name}</li>`;
-        this.userList.append(el);
-        this.userListPS.update();
+        userList.append(el);
+        userListPS.update();
         setTimeout(() => {
             $('.user-list>li.hidden').removeClass('hidden');
         }, 5);
 
-        this.chatWindow.append(`<div class="chat-connection">
-        <small>${name} has connected</small>
-    </div>`);
-        if (!this.scrolling) {
-            console.log(this.chatWindow.prop('scrollHeight'));
-            this.chatWindow.scrollTop(this.chatWindow.prop('scrollHeight'));
+        chatWindow.append(`<div class="chat-connection"><small>${name} has connected</small></div>`);
+        if (!scrolling) {
+            console.log(chatWindow.prop('scrollHeight'));
+            chatWindow.scrollTop(chatWindow.prop('scrollHeight'));
         }
-        this.chatWindowPS.update();
+        chatWindowPS.update();
     }
 
-    removeUser(data) {
+    this.removeUser = (data) => {
         let id = utils.escapeHtml(data.elementID);
         let name = utils.escapeHtml(data.name);
         $(`#${id}`).addClass('hidden');
@@ -194,21 +181,50 @@ class ChatUI {
             $(`#${id}`).remove();
         }, 250);
 
-        this.chatWindow.append(`<div class="chat-connection">
+        chatWindow.append(`<div class="chat-connection">
         <small>${name} has disconnected</small>
     </div>`);
-        if (!this.scrolling) {
-            console.log(this.chatWindow.prop('scrollHeight'));
-            this.chatWindow.scrollTop(this.chatWindow.prop('scrollHeight'));
+        if (!scrolling) {
+            console.log(chatWindow.prop('scrollHeight'));
+            chatWindow.scrollTop(chatWindow.prop('scrollHeight'));
         }
-        this.chatWindowPS.update();
+        chatWindowPS.update();
     }
 
     /**
      * @param {File} file
      */
-    sendFile(file) {
+    this.sendFile = (file) => {
+        fileReader = new FileReader();
+        var slice = file.slice(0, 1000000);
 
+        tempFile = file;
+        tempFileName = file.name + new Date();
+        this.sendFileSlice(slice);
+    }
+
+    /**
+     * @param {Blob} slice
+     */
+    this.sendFileSlice = (slice) => {
+        fileReader.readAsArrayBuffer(slice);
+        fileReader.onload = (evt) => {
+            var arrayBuffer = fileReader.result;
+            socket.uploadFileSlice({
+                name: tempFileName,
+                type: file.type,
+                size: file.size,
+                alias: file.name,
+                data: arrayBuffer
+            });
+        };
+    }
+
+    this.sendRequestedFileSlice = (data) => {
+        var place = data.currentSlice * 100000,
+            slice = tempFile.slice(place, place + Math.min(100000, tempFile.size - place));
+
+        this.sendFileSlice(slice);
     }
 }
 

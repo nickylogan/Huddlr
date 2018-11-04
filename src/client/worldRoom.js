@@ -1,8 +1,4 @@
 import ChatUI from './chatUI';
-import $ from 'jquery';
-import * as utils from '../utils';
-import * as events from '../events';
-import io from 'socket.io-client';
 import ClientSocket from './clientSocket';
 
 let socket = new ClientSocket('/world');
@@ -17,3 +13,6 @@ socket.setDisconnectCallback(function (user) {
 socket.setMessageCallback(function (msg) {
     chatUI.appendMessage(msg)
 });
+socket.setFileSliceRequestCallback(function(data) {
+    chatUI.sendRequestedFileSlice(data);
+})

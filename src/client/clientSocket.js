@@ -15,6 +15,17 @@ let ClientSocket = function (namespace) {
     }
 
     /**
+     * @param {Object} slice
+     * @param {String} slice.name
+     * @param {String} slice.type
+     * @param {Number} slice.size
+     * @param {ArrayBuffer} slice.data
+     */
+    this.uploadFileSlice = function(slice) {
+        socket.emit(events.CLIENT_SEND_FILE_SLICE, slice);
+    }
+
+    /**
      * @callback ConnectionCallback
      * @param {Object} userData
      * @param {String} userData.name
@@ -60,6 +71,18 @@ let ClientSocket = function (namespace) {
         socket.on(events.CHAT_MESSAGE, callback);
     }
 
+    /**
+     * @callback FileSliceRequestCallback
+     * @param {Object} data
+     * @param {Number} data.currentSlice
+     */
+
+    /**
+     * @param {FileSliceRequestCallback} callback
+     */
+    this.setFileSliceRequestCallback = function (callback) {
+        socket.on(events.SERVER_REQUEST_FILE_SLICE, callback);
+    }
 };
 
 export default ClientSocket;
