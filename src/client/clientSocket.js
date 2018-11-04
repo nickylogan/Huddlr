@@ -22,6 +22,7 @@ let ClientSocket = function (namespace) {
      * @param {ArrayBuffer} slice.data
      */
     this.uploadFileSlice = function(slice) {
+        console.log("CLIENT UPLOAD FILE SLICE");
         socket.emit(events.CLIENT_SEND_FILE_SLICE, slice);
     }
 
@@ -82,6 +83,10 @@ let ClientSocket = function (namespace) {
      */
     this.setFileSliceRequestCallback = function (callback) {
         socket.on(events.SERVER_REQUEST_FILE_SLICE, callback);
+    }
+
+    this.setFileUploadFinishedCallback = function(callback) {
+        socket.on(events.SERVER_FINISH_RECEIVE_FILE, callback);
     }
 };
 

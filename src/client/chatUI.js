@@ -16,6 +16,7 @@ import 'perfect-scrollbar/css/perfect-scrollbar.css';
 import '../../resources/sass/style.scss';
 import * as utils from '../utils';
 import dropify from 'dropify';
+import md5 from 'md5';
 import ClientSocket from './clientSocket';
 
 /**
@@ -31,6 +32,7 @@ var ChatUI = function (socket) {
     var userList = $('.user-list');
     var fileInput = $('.file-input');
     var sendFile = $('#sendFile');
+    var fileModal = $('#fileModal');
     var tempFile = null;
     var tempFileName = '';
     var fileReader = null;
@@ -49,6 +51,9 @@ var ChatUI = function (socket) {
 
     // Add scrolling state
     var scrolling = false;
+
+    // Add uploading state
+    var uploading = false;
 
     this.initialize = () => {
         // Set up tooltips
@@ -195,26 +200,48 @@ var ChatUI = function (socket) {
      * @param {File} file
      */
     this.sendFile = (file) => {
+        uploading = true;
+        // change into progress bar
+        fileModal.find('.dropify-wrapper').addClass('d-none');
+        fileModal.find('.modal-body').append(`<div class="file-upload">
+            <p class="text-center">
+            Uploading file...</p><div class="file-progress">
+            <div class="file-progress-bar" role="progressbar" style="width: 0%">
+            </div></div>
+        </div>`);
+
+        // remove close buttons
+        fileModal.find('.modal-footer').addClass('d-none');
+        fileModal.find('.close').addClass('d-none');
+
+        // disable modal close
+        // console.log(fileModal.data('bs.modal'));
+        fileModal.data('bs.modal')._config.backdrop = 'static';
+
         fileReader = new FileReader();
         var slice = file.slice(0, 1000000);
 
         tempFile = file;
-        tempFileName = file.name + new Date();
-        this.sendFileSlice(slice);
+        tempFileName = md5(file.name + new Date());
+        this.sendFileSlice(0, slice);
     }
 
     /**
+     * @param {Number} progress
      * @param {Blob} slice
      */
-    this.sendFileSlice = (slice) => {
+    this.sendFileSlice = (progress, slice) => {
+        fileModal.find('.file-progress-bar').css({
+            width: `${progress}%`
+        });
         fileReader.readAsArrayBuffer(slice);
         fileReader.onload = (evt) => {
             var arrayBuffer = fileReader.result;
             socket.uploadFileSlice({
                 name: tempFileName,
-                type: file.type,
-                size: file.size,
-                alias: file.name,
+                type: tempFile.type,
+                size: tempFile.size,
+                alias: tempFile.name,
                 data: arrayBuffer
             });
         };
@@ -222,9 +249,28 @@ var ChatUI = function (socket) {
 
     this.sendRequestedFileSlice = (data) => {
         var place = data.currentSlice * 100000,
-            slice = tempFile.slice(place, place + Math.min(100000, tempFile.size - place));
+            slice = tempFile.slice(place, place + Math.min(100000, tempFile.size - place)),
+            progress = Math.round(place / tempFile.size * 100);
 
-        this.sendFileSlice(slice);
+        this.sendFileSlice(progress, slice);
+    }
+
+    this.finishFileUpload = () => {
+        fileModal.find('.file-progress-bar').css({
+            width: `100%`
+        });
+        fileModal.modal('hide');
+        fileModal.on('hidden.bs.modal', (e) => this.resetFileModal());
+    }
+
+    this.resetFileModal = () => {
+        var dr = fileInput.dropify();
+        dr = dr.data('dropify');
+        dr.resetPreview();
+        dr.clearElement();
+        fileModal.find('.d-none').removeClass('d-none');
+        $('.file-upload').remove();
+        fileModal.data('bs.modal')._config.backdrop = true;
     }
 }
 

@@ -43,6 +43,10 @@ export default class ChatSocket {
                     this.broadcastChatMessage(socket, user, message);
                 });
 
+                socket.on(events.CLIENT_SEND_FILE_SLICE, (data) => {
+                    this.storeFileSlice(socket, data);
+                })
+
                 socket.on('disconnect', () => {
                     this.broadcastDisconnectMessage(socket, user, sessionID);
                 });
@@ -89,12 +93,15 @@ export default class ChatSocket {
         });
     }
 
-    storeFile(socket, data) {
+    storeFileSlice(socket, data) {
         this.storage.storeFileSlice(data);
         let complete = this.storage.fileIsComplete(data.name);
         if(complete) {
+            console.log("FILE COMPLETE!");
+            this.storage.finalizeFile(data.name);
             socket.emit(events.SERVER_FINISH_RECEIVE_FILE);
         } else {
+            console.log("REQUEST FILE SLICE!");
             socket.emit(events.SERVER_REQUEST_FILE_SLICE, { 
                 currentSlice: this.storage.getCurrentFileSlice(data.name)
             });

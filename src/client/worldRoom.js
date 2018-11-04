@@ -15,4 +15,7 @@ socket.setMessageCallback(function (msg) {
 });
 socket.setFileSliceRequestCallback(function(data) {
     chatUI.sendRequestedFileSlice(data);
-})
+});
+socket.setFileUploadFinishedCallback(function() {
+    chatUI.finishFileUpload();
+});

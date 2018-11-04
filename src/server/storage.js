@@ -124,7 +124,7 @@ let Storage = function () {
         }
 
         //convert the ArrayBuffer to Buffer 
-        data.data = new Buffer(new Uint8Array(data.data));
+        data.data = Buffer.from(new Uint8Array(data.data));
 
         //save the data 
         files[data.name].data.push(data.data);
@@ -132,11 +132,17 @@ let Storage = function () {
     }
 
     this.fileIsComplete = (name) => {
-        return files[name].slice * 100000 >= files[name].size;
+        let result = files[name].slice * 100000 >= files[name].size;
+        if(result) console.log(files);
+        return result;
     }
 
     this.getCurrentFileSlice = (name) => {
         return files[name].slice;
+    }
+
+    this.finalizeFile = (name) => {
+        files[name].buffer = Buffer.concat(files[name].data);
     }
 }
 
