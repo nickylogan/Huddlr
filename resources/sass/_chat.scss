@@ -80,7 +80,7 @@
         height: 100vh;
         right: 0;
     }
-    
+
     &-form {
         z-index: 1000;
         background: #eeeeee;
@@ -98,6 +98,7 @@
         @extend .text-center;
         @extend .my-2;
         background: rgba(0, 0, 0, 0.05);
+
         small {
             @extend .align-text-top;
         }
@@ -114,7 +115,6 @@
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
         border-radius: 2px;
         transition: transform .125s ease-in-out;
-        z-index: -1;
 
         &-wrapper {
             @extend .px-3;
@@ -159,6 +159,72 @@
 
         .chat-time {
             @extend .text-muted;
+        }
+
+        &-file {
+            .file {
+                &-container {
+                    @extend .mt-1;
+                    @extend .border;
+                    cursor: pointer;
+                    opacity: 1;
+                    transition: opacity .25s ease-in-out;
+                    &:hover {
+                        opacity: .5;
+                    }
+                }
+                
+                &-preview {
+                    @extend .d-flex;
+                    @extend .p-1;
+                    @extend .justify-content-center;
+                    @extend .align-items-center;
+                    @extend .bg-white;
+                    @extend .border-bottom;
+                    height: 5rem;
+                    width: 15rem;
+                }
+
+                &-icon {
+                    &::before {
+                        font-style: normal;
+                        font-size: 24px;
+                    }
+                }
+
+                &-name {
+                    @extend .my-0;
+                    @extend .d-block;
+                    @extend .text-truncate;
+
+                    &-container {
+                        max-width: 15rem;
+                        background: rgba(0, 0, 0, 0.05);
+                        @extend .p-2;
+                    }
+                }
+
+                &-details {
+                    @extend .d-flex;
+                    @extend .align-items-center;
+                    @extend .pt-1;
+                    .chat-time {
+                        @extend .ml-auto;
+                    }
+                }
+
+                &-ext {
+                    @extend .text-muted;
+                    &::after {
+                        @extend .px-1;
+                        content: '\00B7';
+                    }
+                }
+
+                &-size {
+                    @extend .text-muted;
+                }
+            }
         }
     }
 
@@ -206,6 +272,7 @@
 .file {
     &-progress {
         @extend .progress;
+
         &-bar {
             @extend .progress-bar;
             @extend .progress-bar-striped;

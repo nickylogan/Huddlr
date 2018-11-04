@@ -28,6 +28,7 @@
     "dropify": "^0.2.2",
     "express": "^4.16.4",
     "express-session": "^1.15.6",
+    "file-icons-js": "github:websemantics/file-icons-js",
     "ip": "^1.1.5",
     "jquery": "^3.3.1",
     "md5": "^2.2.1",
