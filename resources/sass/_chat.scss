@@ -203,6 +203,17 @@
     }
 }
 
+.file {
+    &-progress {
+        @extend .progress;
+        &-bar {
+            @extend .progress-bar;
+            @extend .progress-bar-striped;
+            @extend .progress-bar-animated;
+        }
+    }
+}
+
 .ps>.ps__rail-y {
     z-index: 1000;
     opacity: 0.6;
