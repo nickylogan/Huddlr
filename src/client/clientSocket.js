@@ -88,6 +88,29 @@ let ClientSocket = function (namespace) {
     this.setFileUploadFinishedCallback = function(callback) {
         socket.on(events.SERVER_FINISH_RECEIVE_FILE, callback);
     }
+
+    this.setFileUploadErrorCallback = function(callback) {
+        socket.on(events.SERVER_ERROR_RECEIVE_FILE, callback);
+    }
+
+    /**
+     * @callback FileMessageCallback
+     * @param {Object} message
+     * @param {String} message.user
+     * @param {Object} message.file
+     * @param {String} message.file.name
+     * @param {Number} message.file.size
+     * @param {String} message.file.ext
+     * @param {String} message.time
+     * @param {String} message.color
+     */
+
+    /**
+     * @param {FileMessageCallback} callback
+     */
+    this.setFileMessageCallback = function (callback) {
+        socket.on(events.CHAT_FILE, callback);
+    }
 };
 
 export default ClientSocket;

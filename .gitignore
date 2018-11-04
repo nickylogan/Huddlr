@@ -65,3 +65,6 @@ typings/
 
 # IntelliJ folder
 .idea
+
+# Upload folder
+upload/**

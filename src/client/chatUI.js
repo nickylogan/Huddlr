@@ -1,16 +1,16 @@
 import $ from 'jquery';
 import popper from 'popper.js';
 import bootstrap from 'bootstrap';
-import {library, dom} from '@fortawesome/fontawesome-svg-core';
-import {fas} from '@fortawesome/free-solid-svg-icons';
-import {far} from '@fortawesome/free-regular-svg-icons';
+import { library, dom } from '@fortawesome/fontawesome-svg-core';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { far } from '@fortawesome/free-regular-svg-icons';
 import PerfectScrollbar from 'perfect-scrollbar';
 import md5 from 'md5';
-
 import * as utils from '../utils';
 import dropify from 'dropify';
 import ClientSocket from './clientSocket';
 import FileIcons from 'file-icons-js';
+import filesize from 'filesize';
 
 import '../../resources/sass/style.scss';
 
@@ -37,8 +37,12 @@ var ChatUI = function (socket) {
     dom.watch();
 
     // Set up perfect scrollbar
-    var userListPS = new PerfectScrollbar('#user-list-container', {suppressScrollX: true});
-    var chatWindowPS = new PerfectScrollbar('#chat-container', {suppressScrollX: true});
+    var userListPS = new PerfectScrollbar('#user-list-container', {
+        suppressScrollX: true
+    });
+    var chatWindowPS = new PerfectScrollbar('#chat-container', {
+        suppressScrollX: true
+    });
 
     // Add scrolling state
     var scrolling = false;
@@ -102,9 +106,9 @@ var ChatUI = function (socket) {
         let msg = utils.escapeHtml(data.message);
         let time = utils.escapeHtml(data.time);
         let color = utils.escapeHtml(data.color);
-        let el = data.user == 'self'
-            ? `<div class="chat-bubble chat-bubble-self hidden"><p class="chat-text">${msg}</p><small class="chat-time">${time}</small></div>`
-            : `<div class="chat-bubble chat-bubble-other hidden"><small class="chat-sender" style="color:${color}">${user}</small><p class="chat-text">${msg}</p><small class="chat-time">${time}</small></div>`;
+        let el = data.user == 'self' ?
+            `<div class="chat-bubble chat-bubble-self hidden"><p class="chat-text">${msg}</p><small class="chat-time">${time}</small></div>` :
+            `<div class="chat-bubble chat-bubble-other hidden"><small class="chat-sender" style="color:${color}">${user}</small><p class="chat-text">${msg}</p><small class="chat-time">${time}</small></div>`;
 
         chatWindow.append(el);
 
@@ -121,7 +125,7 @@ var ChatUI = function (socket) {
 
     this.sendMessage = () => {
         let msg = this.getMessageInput();
-        if (!msg) 
+        if (!msg)
             return;
         this.clearMessageInput();
         this.appendMessage({
@@ -135,12 +139,12 @@ var ChatUI = function (socket) {
 
     this.changeScrollingState = (state) => {
         scrolling = state;
-        if (state) 
+        if (state)
             chatScroll.removeClass('hidden');
-        else 
+        else
             chatScroll.addClass('hidden');
-        }
-    
+    }
+
     this.scrollToBottom = () => {
         chatWindow.animate({
             scrollTop: chatWindow.prop('scrollHeight')
@@ -188,40 +192,42 @@ var ChatUI = function (socket) {
      * @param {File} file
      */
     this.sendFile = (file) => {
-        uploading = true;
-        // change into progress bar
-        fileModal
-            .find('.dropify-wrapper')
-            .addClass('d-none');
-        fileModal
-            .find('.modal-body')
-            .append(`<div class="file-upload">
+        if (file) {
+            uploading = true;
+            // change into progress bar
+            fileModal
+                .find('.dropify-wrapper')
+                .addClass('d-none');
+            fileModal
+                .find('.modal-body')
+                .append(`<div class="file-upload">
             <p class="text-center">
             Uploading file...</p><div class="file-progress">
             <div class="file-progress-bar" role="progressbar" style="width: 0%">
             </div></div>
         </div>`);
 
-        // remove close buttons
-        fileModal
-            .find('.modal-footer')
-            .addClass('d-none');
-        fileModal
-            .find('.close')
-            .addClass('d-none');
+            // remove close buttons
+            fileModal
+                .find('.modal-footer')
+                .addClass('d-none');
+            fileModal
+                .find('.close')
+                .addClass('d-none');
 
-        // disable modal close console.log(fileModal.data('bs.modal'));
-        fileModal
-            .data('bs.modal')
-            ._config
-            .backdrop = 'static';
+            // disable modal close console.log(fileModal.data('bs.modal'));
+            fileModal
+                .data('bs.modal')
+                ._config
+                .backdrop = 'static';
 
-        fileReader = new FileReader();
-        var slice = file.slice(0, 1000000);
+            fileReader = new FileReader();
+            var slice = file.slice(0, 1000000);
 
-        tempFile = file;
-        tempFileName = md5(file.name + new Date());
-        this.sendFileSlice(0, slice);
+            tempFile = file;
+            tempFileName = md5(file.name + new Date());
+            this.sendFileSlice(0, slice);
+        }
     }
 
     /**
@@ -231,11 +237,19 @@ var ChatUI = function (socket) {
     this.sendFileSlice = (progress, slice) => {
         fileModal
             .find('.file-progress-bar')
-            .css({width: `${progress}%`});
+            .css({
+                width: `${progress}%`
+            });
         fileReader.readAsArrayBuffer(slice);
         fileReader.onload = (evt) => {
             var arrayBuffer = fileReader.result;
-            socket.uploadFileSlice({name: tempFileName, type: tempFile.type, size: tempFile.size, alias: tempFile.name, data: arrayBuffer});
+            socket.uploadFileSlice({
+                name: tempFileName,
+                type: tempFile.type,
+                size: tempFile.size,
+                alias: tempFile.name,
+                data: arrayBuffer
+            });
         };
     }
 
@@ -250,7 +264,9 @@ var ChatUI = function (socket) {
     this.finishFileUpload = () => {
         fileModal
             .find('.file-progress-bar')
-            .css({width: `100%`});
+            .css({
+                width: `100%`
+            });
         fileModal.modal('hide');
         fileModal.on('hidden.bs.modal', (e) => this.resetFileModal());
 
@@ -284,7 +300,7 @@ var ChatUI = function (socket) {
     this.appendFileMessage = (data) => {
         let user = utils.escapeHtml(data.user);
         let fileName = utils.escapeHtml(data.file.name);
-        let fileSize = utils.escapeHtml(data.file.size + '');
+        let fileSize = filesize(data.file.size);
         let fileExt = utils.escapeHtml(data.file.ext);
         let time = utils.escapeHtml(data.time);
         let color = utils.escapeHtml(data.color);

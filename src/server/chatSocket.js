@@ -44,7 +44,7 @@ export default class ChatSocket {
                 });
 
                 socket.on(events.CLIENT_SEND_FILE_SLICE, (data) => {
-                    this.storeFileSlice(socket, data);
+                    this.storeFileSlice(socket, user, data);
                 })
 
                 socket.on('disconnect', () => {
@@ -93,13 +93,27 @@ export default class ChatSocket {
         });
     }
 
-    storeFileSlice(socket, data) {
+    storeFileSlice(socket, user, data) {
         this.storage.storeFileSlice(data);
         let complete = this.storage.fileIsComplete(data.name);
         if(complete) {
             console.log("FILE COMPLETE!");
-            this.storage.finalizeFile(data.name);
-            socket.emit(events.SERVER_FINISH_RECEIVE_FILE);
+            let res = this.storage.finalizeFile(data.name);
+            if(!res.err) {
+                socket.emit(events.SERVER_FINISH_RECEIVE_FILE);
+                socket.broadcast.emit(events.CHAT_FILE, {
+                    user: user.name,
+                    file: {
+                        name: res.name,
+                        size: res.size,
+                        ext: res.name.split('.').pop().toUpperCase(),
+                    },
+                    time: utils.getSimpleTime(),
+                    color: user.color,
+                });
+            } else {
+                socket.emit(events.SERVER_ERROR_RECEIVE_FILE, res.err);
+            }
         } else {
             console.log("REQUEST FILE SLICE!");
             socket.emit(events.SERVER_REQUEST_FILE_SLICE, { 

@@ -19,3 +19,10 @@ socket.setFileSliceRequestCallback(function(data) {
 socket.setFileUploadFinishedCallback(function() {
     chatUI.finishFileUpload();
 });
+socket.setFileMessageCallback(function(msg) {
+    chatUI.appendFileMessage(msg);
+})
+socket.setFileUploadErrorCallback(function(err) {
+    alert("UPLOAD ERROR!");
+    console.log(err);
+})
