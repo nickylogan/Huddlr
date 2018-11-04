@@ -1,6 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
     mode: 'development',
@@ -16,7 +16,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'public/assets'),
         publicPath: '/assets/',
-        filename: "[name].bundle.js",
+        filename: '[name].bundle.js',
     },
     module: {
         rules: [{
@@ -26,7 +26,7 @@ module.exports = {
             },
             {
                 test: /\.s?css$/,
-                use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"]
+                use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
             },
             {
                 test: /\.(png|woff|woff2|eot|ttf|svg)$/,
@@ -38,7 +38,7 @@ module.exports = {
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoEmitOnErrorsPlugin(),
         new MiniCssExtractPlugin({
-            filename: "[name].bundle.css"
+            filename: '[name].bundle.css'
         })
     ]
 }
