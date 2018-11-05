@@ -70,8 +70,9 @@ io.use(function (socket, next) {
 });
 
 let serverSocket = new ServerSocket(io, storage);
-let worldSocket = new ChatSocket(io, storage, 'world', serverSocket.broadcastServerLog).initialize();
-let privateSocket = new PrivateChatSocket(io, storage, 'private', serverSocket.broadcastServerLog).initialize();
+let callback = serverSocket.broadcastServerLog.bind(serverSocket);
+let worldSocket = new ChatSocket(io, storage, 'world', callback).initialize();
+let privateSocket = new PrivateChatSocket(io, storage, 'private', callback).initialize();
 
 let server = http.listen(port, function () {
     console.log('Listening on localhost:' + port);

@@ -10,8 +10,10 @@ export default class ServerSocket {
      */
     constructor(io, storage) {
         this.io = io;
-        this.nsp = this.io.of(`/server`);
+        this.nsp = this.io.of('/server');
         this.storage = storage;
+
+        this.broadcastServerLog.bind(this);
     }
 
     /**
@@ -22,6 +24,8 @@ export default class ServerSocket {
      * @param {String} log.room
      */
     broadcastServerLog(log) {
+        console.log(log);
+        console.log(this.nsp);
         log.time = utils.getTerminalTime();
         this.storage.appendLog(log);
         this.nsp.emit(events.SERVER_LOG, log);
