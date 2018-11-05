@@ -79,13 +79,12 @@ export default class AppController {
     }
 
     PrivateGet(req, res, next) {
-        console.log("Get called");
         let roomID = req.params.id;
         let name = req.session.name;
         if (!name) {
             res.redirect('/');
         } else if (this.isValidRoomID(roomID)) {
-            console.log("Room valid");
+            // console.log("Room valid");
             let users = this.storage.getUsersInRoomExcept(roomID, req.sessionID);
             res.render('privateRoom', {
                 name: req.session.name,
@@ -93,7 +92,7 @@ export default class AppController {
                 roomID: roomID,
             });
         } else {
-            console.log("Room invalid");
+            // console.log("Room invalid");
             res.status(404).send('Invalid room');
         }
     }
