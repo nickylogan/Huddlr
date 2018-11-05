@@ -73,6 +73,9 @@ let serverSocket = new ServerSocket(io, storage);
 let worldSocket = new ChatSocket(io, storage, 'world', serverSocket.broadcastServerLog).initialize();
 let privateSocket = new PrivateChatSocket(io, storage, 'private', serverSocket.broadcastServerLog).initialize();
 
-http.listen(port, function () {
+let server = http.listen(port, function () {
     console.log('Listening on localhost:' + port);
 });
+
+// process.on()
+// server.close();

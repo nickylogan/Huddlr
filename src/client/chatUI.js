@@ -1,9 +1,16 @@
 import $ from 'jquery';
 import popper from 'popper.js';
 import bootstrap from 'bootstrap';
-import { library, dom } from '@fortawesome/fontawesome-svg-core';
-import { fas } from '@fortawesome/free-solid-svg-icons';
-import { far } from '@fortawesome/free-regular-svg-icons';
+import {
+    library,
+    dom
+} from '@fortawesome/fontawesome-svg-core';
+import {
+    fas
+} from '@fortawesome/free-solid-svg-icons';
+import {
+    far
+} from '@fortawesome/free-regular-svg-icons';
 import PerfectScrollbar from 'perfect-scrollbar';
 import md5 from 'md5';
 import * as utils from '../utils';
@@ -31,6 +38,7 @@ var ChatUI = function (socket) {
     var tempFile = null;
     var tempFileName = '';
     var fileReader = null;
+    var filePathMap = {};
 
     // Add fontawesome libraries
     library.add(fas, far);
@@ -77,6 +85,14 @@ var ChatUI = function (socket) {
 
         chatWindow.on('ps-scroll-up', () => {
             this.changeScrollingState(true);
+        });
+
+        chatWindow.on('click', '.file-container', (e) => {
+            let id = e.currentTarget.id;
+            let path = filePathMap[id];
+            let fileName = $(e.currentTarget).find('.file-name')[0].innerText;
+            console.log(fileName);
+            this.downloadFile(path, fileName);
         });
 
         fileInput.dropify();
@@ -302,8 +318,16 @@ var ChatUI = function (socket) {
         let fileName = utils.escapeHtml(data.file.name);
         let fileSize = filesize(data.file.size);
         let fileExt = utils.escapeHtml(data.file.ext);
+        let filePath = data.file.path;
+        let fileContainerID = '';
+        if (filePath) {
+            fileContainerID = md5(filePath);
+            filePathMap[fileContainerID] = filePath;
+        }
+
         let time = utils.escapeHtml(data.time);
         let color = utils.escapeHtml(data.color);
+
         let el = '';
         if (data.user == 'self') {
             el = `<div class="chat-bubble chat-bubble-self chat-bubble-file hidden">`;
@@ -312,7 +336,7 @@ var ChatUI = function (socket) {
             <small class="chat-sender" style="color:${color}">${user}</small>`;
         }
         el += `
-            <div class="file-container">
+            <div class="file-container" id="${fileContainerID}">
                 <div class="file-preview">
                     <i class="file-icon ${FileIcons.getClassWithColor(fileName)}"></i>
                 </div>
@@ -338,6 +362,21 @@ var ChatUI = function (socket) {
             chatWindow.scrollTop(chatWindow.prop('scrollHeight'));
         }
         chatWindowPS.update();
+    }
+
+    this.downloadFile = (path, fileName) => {
+        $.get(path, function (data) {
+            let blob = new Blob([new Uint8Array(data.data.data)], {
+                type: data.type
+            });
+            var link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.download = fileName;
+            // console.log(data);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
     }
 }
 

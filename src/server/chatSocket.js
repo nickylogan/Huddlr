@@ -104,8 +104,9 @@ export default class ChatSocket {
                 socket.broadcast.emit(events.CHAT_FILE, {
                     user: user.name,
                     file: {
-                        name: res.name,
+                        name: res.alias,
                         size: res.size,
+                        path: '/files/' + res.name,
                         ext: res.name.split('.').pop().toUpperCase(),
                     },
                     time: utils.getSimpleTime(),

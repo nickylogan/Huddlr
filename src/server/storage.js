@@ -59,7 +59,7 @@ let Storage = function () {
     this.removeUserFromRoom = function (sessionID, roomID) {
         rooms[roomID].delete(sessionID);
     }
-    
+
     /**
      * @param {String} roomID
      * @returns {Object}
@@ -134,7 +134,7 @@ let Storage = function () {
 
     this.fileIsComplete = (name) => {
         let result = files[name].slice * 100000 >= files[name].size;
-        if(result) console.log(files);
+        if (result) console.log(files);
         return result;
     }
 
@@ -144,12 +144,14 @@ let Storage = function () {
 
     this.finalizeFile = (name) => {
         var fileBuffer = Buffer.concat(files[name].data);
-        let res = {
-            name: files[name].alias,
-            size: files[name].size,
-        };
         let ext = files[name].alias.split('.').pop();
-        let path = __dirname + `/../../upload/${files[name].name}.${ext}`;
+        let finalName = `${files[name].name}.${ext}`
+        let path = __dirname + `/../../upload/${finalName}`;
+        let res = {
+            alias: files[name].alias,
+            size: files[name].size,
+            name: finalName
+        };
         console.log(path);
         fs.writeFile(path, fileBuffer, (err) => {
             delete files[name];
