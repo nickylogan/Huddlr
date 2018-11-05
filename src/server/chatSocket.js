@@ -112,6 +112,12 @@ export default class ChatSocket {
                     time: utils.getSimpleTime(),
                     color: user.color,
                 });
+                this.broadcastServerLog({
+                    type: events.SERVER_FILE,
+                    user: user.name,
+                    message: res.alias,
+                    room: 'WORLD',
+                })
             } else {
                 socket.emit(events.SERVER_ERROR_RECEIVE_FILE, res.err);
             }

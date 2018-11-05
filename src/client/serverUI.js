@@ -78,6 +78,9 @@ class ServerUI {
             case events.SERVER_CHAT:
                 content = `<span class="text-primary">&lt;&lt;ROOM:${log.room}&gt;&gt;</span> <span class="text-warning">${log.user}</span> sent message <span class="text-info">"${log.message}"</span>`;
                 break;
+            case events.SERVER_FILE:
+                content = `<span class="text-primary">&lt;&lt;ROOM:${log.room}&gt;&gt;</span> <span class="text-warning">${log.user}</span> sent a file: <span class="text-info">${log.message}</span>`;
+                break;
             default:
                 content = `asdf`
                 break;
