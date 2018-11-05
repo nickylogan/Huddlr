@@ -162,6 +162,10 @@
         }
 
         &-file {
+            &.chat-bubble-self .file-container:hover{
+                cursor: default;
+                opacity: 1;
+            }
             .file {
                 &-container {
                     @extend .mt-1;
