@@ -69,9 +69,6 @@ export default class AppController {
         let name = req.session.name;
         if (name) {
             let users = this.storage.getUsersInRoomExcept('world', req.sessionID);
-            // console.log("####");
-            console.log(users);
-            // console.log("####");
             res.render('worldRoom', {
                 name: req.session.name,
                 users: users,
@@ -87,12 +84,13 @@ export default class AppController {
         let name = req.session.name;
         if (!name) {
             res.redirect('/');
-        }
-        if (this.isValidRoomID(roomID)) {
+        } else if (this.isValidRoomID(roomID)) {
             console.log("Room valid");
+            let users = this.storage.getUsersInRoomExcept(roomID, req.sessionID);
             res.render('privateRoom', {
                 name: req.session.name,
-                roomID: roomID
+                users: users,
+                roomID: roomID,
             });
         } else {
             console.log("Room invalid");
