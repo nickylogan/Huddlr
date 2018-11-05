@@ -89,10 +89,8 @@ var ChatUI = function (socket) {
 
         chatWindow.on('click', '.file-container', (e) => {
             let id = e.currentTarget.id;
-            let path = filePathMap[id];
             let fileName = $(e.currentTarget).find('.file-name')[0].innerText;
-            console.log(fileName);
-            this.downloadFile(path, fileName);
+            this.downloadFile(id, fileName);
         });
 
         fileInput.dropify();
@@ -133,7 +131,6 @@ var ChatUI = function (socket) {
         }, 5);
 
         if (!scrolling) {
-            console.log(chatWindow.prop('scrollHeight'));
             chatWindow.scrollTop(chatWindow.prop('scrollHeight'));
         }
         chatWindowPS.update();
@@ -180,7 +177,6 @@ var ChatUI = function (socket) {
 
         chatWindow.append(`<div class="chat-connection"><small>${name} has connected</small></div>`);
         if (!scrolling) {
-            console.log(chatWindow.prop('scrollHeight'));
             chatWindow.scrollTop(chatWindow.prop('scrollHeight'));
         }
         chatWindowPS.update();
@@ -198,7 +194,6 @@ var ChatUI = function (socket) {
         <small>${name} has disconnected</small>
     </div>`);
         if (!scrolling) {
-            console.log(chatWindow.prop('scrollHeight'));
             chatWindow.scrollTop(chatWindow.prop('scrollHeight'));
         }
         chatWindowPS.update();
@@ -358,24 +353,58 @@ var ChatUI = function (socket) {
         }, 5);
 
         if (!scrolling) {
-            console.log(chatWindow.prop('scrollHeight'));
             chatWindow.scrollTop(chatWindow.prop('scrollHeight'));
         }
         chatWindowPS.update();
     }
 
-    this.downloadFile = (path, fileName) => {
-        $.get(path, function (data) {
-            let blob = new Blob([new Uint8Array(data.data.data)], {
-                type: data.type
-            });
-            var link = document.createElement('a');
-            link.href = window.URL.createObjectURL(blob);
-            link.download = fileName;
-            // console.log(data);
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+    this.downloadFile = (id, fileName) => {
+        let path = filePathMap[id];
+        $.ajax({
+            xhr: () => {
+                var xhr = new window.XMLHttpRequest();
+                //Download progress
+                xhr.addEventListener("progress", (evt) => {
+                    if (evt.lengthComputable) {
+                        var percentComplete = Math.round(evt.loaded / evt.total * 100);
+                        $(`#${id}`).parent().find('.file-download-progress-bar').css({
+                            width: `${percentComplete}%`
+                        });
+                        //Do something with download progress
+                    }
+                }, false);
+                xhr.addEventListener('readystatechange', (e) => {
+                    if (xhr.readyState == 2 && xhr.status == 200) {
+                        $(`#${id}`).after(
+                            `<div class="file-download-progress">
+                                <div class="file-download-progress-bar" role="progressbar" style="width: 0%;"></div>
+                            </div>`
+                        );
+                    } else if (xhr.readyState == 3) {
+                        // Download is under progress
+                    } else if (xhr.readyState == 4) {
+                        $(`#${id}`).parent().find('.file-download-progress-bar').css({
+                            width: '100%'
+                        });
+                        setTimeout(() => $(`#${id}`).parent().find('.file-download-progress').remove(), 500);
+                    }
+                });
+                return xhr;
+            },
+            type: 'GET',
+            url: path,
+            success: function (data) {
+                let blob = new Blob([new Uint8Array(data.data.data)], {
+                    type: data.type
+                });
+                var link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = fileName;
+                // console.log(data);
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
         });
     }
 }

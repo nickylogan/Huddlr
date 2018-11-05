@@ -173,6 +173,14 @@
                         opacity: .5;
                     }
                 }
+
+                &-download-progress {
+                    @extend .progress;
+                    height: 1px;
+                    &-bar {
+                        @extend .progress-bar;
+                    }
+                }
                 
                 &-preview {
                     @extend .d-flex;
