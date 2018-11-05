@@ -67,4 +67,5 @@ typings/
 .idea
 
 # Upload folder
-upload/**
+upload/*
+!upload/.gitkeep
