@@ -8,6 +8,6 @@ let serverUI = new ServerUI();
 var socket = io('/server');
 
 socket.on(events.SERVER_LOG, function(data) {
-    console.log(data);
+    // console.log(data);
     serverUI.appendLog(data);
 });

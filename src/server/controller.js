@@ -2,7 +2,6 @@ import Storage from './storage';
 import * as utils from '../utils';
 import * as events from '../events';
 import md5 from 'md5';
-import ip from 'ip';
 import fs from 'fs';
 
 var mmm = require('mmmagic'),
@@ -13,9 +12,10 @@ export default class AppController {
     /**
      * @param {Storage} storage
      */
-    constructor(storage, port) {
+    constructor(storage, ip, port) {
         this._router = require('express').Router();
         this.storage = storage;
+        this.ip = ip;
         this.port = port;
     }
 
@@ -101,7 +101,7 @@ export default class AppController {
         let elements = this.storage.logs().map(log => this.getLogElement(log));
         res.render('server', {
             logs: elements,
-            ip: ip.address('private', 'ipv4'),
+            ip: this.ip,
             port: this.port,
         });
     }

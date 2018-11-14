@@ -21,6 +21,7 @@ import 'toastr/build/toastr.css';
     function validateForm() {
         var valid = true;
         $('input[required]').each(function () {
+            $(this).val($(this).val().trim());
             if (!$(this).val()) {
                 $(this).addClass('is-invalid');
                 $(this).removeClass('is-valid');
@@ -48,5 +49,5 @@ import 'toastr/build/toastr.css';
     $('#createRoom').click(function () {
         form.append($(`<input type="hidden" name="type" value="create">`));
         form.submit();
-    })
+    });
 })()

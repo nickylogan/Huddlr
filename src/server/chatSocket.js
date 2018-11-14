@@ -122,9 +122,10 @@ export default class ChatSocket {
                 socket.emit(events.SERVER_ERROR_RECEIVE_FILE, res.err);
             }
         } else {
-            console.log("REQUEST FILE SLICE!");
+            var curr = this.storage.getCurrentFileSlice(data.name);
+            // console.log("REQUEST FILE SLICE: " + curr);
             socket.emit(events.SERVER_REQUEST_FILE_SLICE, { 
-                currentSlice: this.storage.getCurrentFileSlice(data.name)
+                currentSlice: curr
             });
         }
     }

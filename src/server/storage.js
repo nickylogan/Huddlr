@@ -152,7 +152,7 @@ let Storage = function () {
             size: files[name].size,
             name: finalName
         };
-        console.log(path);
+        // console.log(path);
         fs.writeFile(path, fileBuffer, (err) => {
             delete files[name];
             if (err) {

@@ -6,6 +6,8 @@ import webpack from 'webpack';
 import uuid from 'uuid/v4';
 import expressSession from 'express-session';
 import socketio from 'socket.io';
+import fs from 'fs';
+import ip from 'ip';
 
 import Storage from './storage';
 import AppController from './controller';
@@ -17,7 +19,7 @@ import PrivateChatSocket from './privateChatSocket';
 const app = express();
 
 // Set up webpack middleware
-const config  = require('../../webpack.config.js');
+const config = require('../../webpack.config.js');
 const compiler = webpack(config);
 app.use(require('webpack-dev-middleware')(compiler));
 app.use(require('webpack-hot-middleware')(compiler));
@@ -30,9 +32,8 @@ if (app.get('env') === 'development') {
 // Set up templating engine
 app.engine('html', mustache());
 app.set('view engine', 'html');
-// app.set('views', path.join(__dirname, '/resources/views'))
-
-// Set up cookie-parser middleware
+// app.set('views', path.join(__dirname, '/resources/views')) Set up
+// cookie-parser middleware
 app.use(cookieParser('secret'));
 
 // Set up session management middleware
@@ -51,16 +52,17 @@ app.use(express.urlencoded());
 // Set up static folder
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
-
 // Set up http
 var http = require('http').Server(app);
+// var ipaddr = ip.address('public', 'ipv4');
+var ipaddr = '10.121.11.226';
 var port = process.env.PORT || 3000;
 
 // Set up storage
 let storage = new Storage();
 
 // Set up routes
-let routes = new AppController(storage, port).intitialize();
+let routes = new AppController(storage, ip, port).intitialize();
 app.use('/', routes.router);
 
 // Set up sockets
@@ -70,13 +72,38 @@ io.use(function (socket, next) {
 });
 
 let serverSocket = new ServerSocket(io, storage);
-let callback = serverSocket.broadcastServerLog.bind(serverSocket);
+let callback = serverSocket
+    .broadcastServerLog
+    .bind(serverSocket);
 let worldSocket = new ChatSocket(io, storage, 'world', callback).initialize();
 let privateSocket = new PrivateChatSocket(io, storage, 'private', callback).initialize();
 
-let server = http.listen(port, function () {
-    console.log('Listening on localhost:' + port);
+http.on('close', function () {
+    console.log('Stopping...');
+    const directory = path.join(__dirname, '/../../upload/');
+    fs.readdir(directory, (err, files) => {
+        if (err) 
+            throw err;
+        for (const file of files) {
+            // console.log(file);
+            if (file != '.gitkeep') {
+                fs.unlink(path.join(directory, file), (err) => {
+                    if (err) throw err;
+                    }
+                );
+            }
+        }
+    });
 });
 
-// process.on()
-// server.close();
+process.on('exit', function () {
+    http.close();
+});
+
+process.on('SIGINT', function () {
+    http.close();
+});
+
+http.listen(port, ipaddr, function () {
+    console.log('Listening on ' + ipaddr + ':' + port);
+});

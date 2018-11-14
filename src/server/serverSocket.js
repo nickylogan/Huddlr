@@ -24,8 +24,6 @@ export default class ServerSocket {
      * @param {String} log.room
      */
     broadcastServerLog(log) {
-        console.log(log);
-        console.log(this.nsp);
         log.time = utils.getTerminalTime();
         this.storage.appendLog(log);
         this.nsp.emit(events.SERVER_LOG, log);

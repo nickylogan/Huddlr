@@ -138,7 +138,7 @@ var ChatUI = function (socket) {
 
     this.sendMessage = () => {
         let msg = this.getMessageInput();
-        if (!msg)
+        if (!msg.trim())
             return;
         this.clearMessageInput();
         this.appendMessage({
@@ -233,7 +233,7 @@ var ChatUI = function (socket) {
                 .backdrop = 'static';
 
             fileReader = new FileReader();
-            var slice = file.slice(0, 1000000);
+            var slice = file.slice(0, 100000);
 
             tempFile = file;
             tempFileName = md5(file.name + new Date());
@@ -268,7 +268,6 @@ var ChatUI = function (socket) {
         var place = data.currentSlice * 100000,
             slice = tempFile.slice(place, place + Math.min(100000, tempFile.size - place)),
             progress = Math.round(place / tempFile.size * 100);
-
         this.sendFileSlice(progress, slice);
     }
 
