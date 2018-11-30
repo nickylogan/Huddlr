@@ -28,11 +28,7 @@ $ npm start
 Listening on localhost:3000
 ```
 
-If it works then this is what it will look like
-
-<p align="center">
-    //TODO: insert image here
-</p>
+Now just open your favorite web browser and type the ip address of the server and voilà it works!
 
 ## Huddlr Tour
 
