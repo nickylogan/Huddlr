@@ -627,7 +627,7 @@ This page is a simple page that allows a client to view the server's logs and th
 * [Socket.io](https://socket.io/) - Socket.io
 * [Node.js](https://nodejs.org/) - Node.js
 * [npm](https://www.npmjs.com/) - npm
-* [Express](https://expressjs.com/)
+* [Express](https://expressjs.com/) - ExpressJs
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
