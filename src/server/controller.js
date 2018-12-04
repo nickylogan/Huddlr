@@ -12,10 +12,10 @@ export default class AppController {
     /**
      * @param {Storage} storage
      */
-    constructor(storage, ip, port) {
+    constructor(storage, ipaddr, port) {
         this._router = require('express').Router();
         this.storage = storage;
-        this.ip = ip;
+        this.ipaddr = ipaddr;
         this.port = port;
     }
 
@@ -101,7 +101,7 @@ export default class AppController {
         let elements = this.storage.logs().map(log => this.getLogElement(log));
         res.render('server', {
             logs: elements,
-            ip: this.ip,
+            ipaddr: this.ipaddr,
             port: this.port,
         });
     }

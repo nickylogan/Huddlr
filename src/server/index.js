@@ -54,15 +54,15 @@ app.use('/public', express.static(path.join(__dirname, 'public')));
 
 // Set up http
 var http = require('http').Server(app);
-// var ipaddr = ip.address('public', 'ipv4');
-var ipaddr = 'localhost';
+var ipaddr = ip.address('public', 'ipv4');
+// var ipaddr = 'localhost';
 var port = process.env.PORT || 3000;
 
 // Set up storage
 let storage = new Storage();
 
 // Set up routes
-let routes = new AppController(storage, ip, port).intitialize();
+let routes = new AppController(storage, ipaddr, port).intitialize();
 app.use('/', routes.router);
 
 // Set up sockets
