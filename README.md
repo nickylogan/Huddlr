@@ -69,9 +69,7 @@ Let's take a quick tour of Huddlr!
 
 #### View Server Logs
 
-<p align="center">
-    //TODO: insert images here
-</p>
+![screenshot-server-log](https://raw.githubusercontent.com/Log-baseE/Huddlr/master/screenshots/server-log.png)
 
 ## Explanation
 
