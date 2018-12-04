@@ -18,6 +18,7 @@ Make sure that [npm](https://www.npmjs.com/) and [Node.js](https://nodejs.org/en
 Before starting up the application, open your downloaded folder and install all the dependencies by running:
 
 ```sh
+npm install --global windows-build-tool
 npm install
 ```
 
