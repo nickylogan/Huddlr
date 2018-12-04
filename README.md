@@ -38,10 +38,6 @@ Let's take a quick tour of Huddlr!
 
 ### Features:
 
-<p align="center">
-    //TODO: insert images here
-</p>
-
 #### Global Chat
 
 ![screenshot-world-chat](https://raw.githubusercontent.com/Log-baseE/Huddlr/master/screenshots/worldchat.gif)
