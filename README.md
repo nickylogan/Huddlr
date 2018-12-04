@@ -90,7 +90,7 @@ Socket ID
 
 ### How to make bottom label (e.g. “Techworld3g”) changed to Client’s name
 
-Session management is important
+Session management is important as all names are stored in sessions.
 
 ### How to send file only to a certain client ?
 
