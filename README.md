@@ -46,17 +46,17 @@ Let's take a quick tour of Huddlr!
 
 ![screenshot-world-chat](https://raw.githubusercontent.com/Log-baseE/Huddlr/master/screenshots/worldchat.gif)
 
+#### Start Private Chats (Creating a chat room)
+
+![screenshot-world-chat](https://raw.githubusercontent.com/Log-baseE/Huddlr/master/screenshots/createaroom.gif)
+
 #### Private Chat (Join a chat room)
 
-<p align="center">
-    //TODO: insert images here
-</p>
+![screenshot-world-chat](https://raw.githubusercontent.com/Log-baseE/Huddlr/master/screenshots/joinaroom.gif)
 
 #### Send Files in Chat
 
-<p align="center">
-    //TODO: insert images here
-</p>
+![screenshot-world-chat](https://raw.githubusercontent.com/Log-baseE/Huddlr/master/screenshots/sendfiles.gif)
 
 #### Custon Username
 
