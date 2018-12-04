@@ -32,6 +32,15 @@ Listening on localhost:3000
 Now just open your favorite web browser and type the ip address of the server and voilà it works!
 
 ![screenshot-home](https://raw.githubusercontent.com/Log-baseE/Huddlr/master/screenshots/huddlr-home.JPG)
+
+### Access From Other Computers
+
+So that Huddlr is able to be accessed by other computers on the same network:
+* Make sure that client computer and the server computer are in the same network
+* Get the IP address of the server by using `ipconfig` on windows or `ifconfig` on linux on the server to reveal the IP address.
+* Then on the client computer access the IP address of the server that we got from the previous step
+    * ex: My server's IP address is 172.32.169.2 so I enter `http://172.32.169.2:3000` on my client's web browser to access Huddlr
+
 ## Huddlr Tour
 
 Let's take a quick tour of Huddlr!
