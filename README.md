@@ -31,6 +31,8 @@ Listening on localhost:3000
 
 Now just open your favorite web browser and type the ip address of the server and voilà it works!
 
+![screenshot-home](https://raw.githubusercontent.com/Log-baseE/Huddlr/master/screenshots/huddlr-home.JPG)
+
 ## Huddlr Tour
 
 Let's take a quick tour of Huddlr!
