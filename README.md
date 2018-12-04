@@ -103,7 +103,7 @@ This is an illustration of how our file sharing system works when a client wants
 * ...
 * Client: That's it! I have no more slices to give
 * Server: Okay since there's no more slices, I'll process this file then!
-Then the server will process the file and send the downloadable link to the rest of the clients.
+
 
 
 ## Explanation
