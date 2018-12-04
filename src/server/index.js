@@ -55,7 +55,7 @@ app.use('/public', express.static(path.join(__dirname, 'public')));
 // Set up http
 var http = require('http').Server(app);
 // var ipaddr = ip.address('public', 'ipv4');
-var ipaddr = '10.121.11.226';
+var ipaddr = 'localhost';
 var port = process.env.PORT || 3000;
 
 // Set up storage
