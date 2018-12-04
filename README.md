@@ -44,21 +44,19 @@ Let's take a quick tour of Huddlr!
 
 #### Start Private Chats (Creating a chat room)
 
-![screenshot-world-chat](https://raw.githubusercontent.com/Log-baseE/Huddlr/master/screenshots/createaroom.gif)
+![screenshot-private-chat-create](https://raw.githubusercontent.com/Log-baseE/Huddlr/master/screenshots/createaroom.gif)
 
 #### Private Chat (Join a chat room)
 
-![screenshot-world-chat](https://raw.githubusercontent.com/Log-baseE/Huddlr/master/screenshots/joinaroom.gif)
+![screenshot-private-chat-join](https://raw.githubusercontent.com/Log-baseE/Huddlr/master/screenshots/joinaroom.gif)
 
 #### Send Files in Chat
 
-![screenshot-world-chat](https://raw.githubusercontent.com/Log-baseE/Huddlr/master/screenshots/sendfiles.gif)
+![screenshot-send-file](https://raw.githubusercontent.com/Log-baseE/Huddlr/master/screenshots/sendfiles.gif)
 
-#### Custon Username
+#### Custom Usernames
 
-<p align="center">
-    //TODO: insert images here
-</p>
+![screenshot-custom-username](https://raw.githubusercontent.com/Log-baseE/Huddlr/master/screenshots/customusernames.gif)
 
 #### View Server Logs
 
