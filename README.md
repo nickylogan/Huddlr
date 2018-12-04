@@ -38,7 +38,7 @@ Let's take a quick tour of Huddlr!
 
 ### Features:
 
-#### Global Chat
+#### Global Chat with Chat Animation and Colors
 
 ![screenshot-world-chat](https://raw.githubusercontent.com/Log-baseE/Huddlr/master/screenshots/worldchat.gif)
 
@@ -59,13 +59,6 @@ Let's take a quick tour of Huddlr!
 ![screenshot-custom-username](https://raw.githubusercontent.com/Log-baseE/Huddlr/master/screenshots/customusernames.gif)
 
 #### View Server Logs
-
-<p align="center">
-    //TODO: insert images here
-</p>
-
-
-#### Chat Animations and Colors
 
 <p align="center">
     //TODO: insert images here
