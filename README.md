@@ -44,7 +44,7 @@ Let's take a quick tour of Huddlr!
 
 #### Global Chat
 
-~[screenshot-world-chat](https://raw.githubusercontent.com/Log-baseE/Huddlr/master/screenshots/worldchat.gif)
+![screenshot-world-chat](https://raw.githubusercontent.com/Log-baseE/Huddlr/master/screenshots/worldchat.gif)
 
 #### Private Chat (Join a chat room)
 
