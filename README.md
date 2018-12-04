@@ -38,40 +38,27 @@ Let's take a quick tour of Huddlr!
 
 ### Features:
 
-<p align="center">
-    //TODO: insert images here
-</p>
-
-#### Global Chat
+#### Global Chat with Chat Animation and Colors
 
 ![screenshot-world-chat](https://raw.githubusercontent.com/Log-baseE/Huddlr/master/screenshots/worldchat.gif)
 
+#### Start Private Chats (Creating a chat room)
+
+![screenshot-private-chat-create](https://raw.githubusercontent.com/Log-baseE/Huddlr/master/screenshots/createaroom.gif)
+
 #### Private Chat (Join a chat room)
 
-<p align="center">
-    //TODO: insert images here
-</p>
+![screenshot-private-chat-join](https://raw.githubusercontent.com/Log-baseE/Huddlr/master/screenshots/joinaroom.gif)
 
 #### Send Files in Chat
 
-<p align="center">
-    //TODO: insert images here
-</p>
+![screenshot-send-file](https://raw.githubusercontent.com/Log-baseE/Huddlr/master/screenshots/sendfiles.gif)
 
-#### Custon Username
+#### Custom Usernames
 
-<p align="center">
-    //TODO: insert images here
-</p>
+![screenshot-custom-username](https://raw.githubusercontent.com/Log-baseE/Huddlr/master/screenshots/customusernames.gif)
 
 #### View Server Logs
-
-<p align="center">
-    //TODO: insert images here
-</p>
-
-
-#### Chat Animations and Colors
 
 <p align="center">
     //TODO: insert images here
