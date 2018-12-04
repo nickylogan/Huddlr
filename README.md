@@ -71,6 +71,41 @@ Let's take a quick tour of Huddlr!
 
 ![screenshot-server-log](https://raw.githubusercontent.com/Log-baseE/Huddlr/master/screenshots/server-log.png)
 
+## Questions and Answers
+
+### How to send message only to a certain client ?
+
+Client broadcasts message
+* Client socket emits message to server
+Server receives message & logs it
+* Server listens for messages in socket. When one is received, the server logs it
+Server rebroadcasts message to the rest of the clients in the room
+* The server broadcasts the message to everyone in the same room as the sender
+
+### When certain client disconnect then in Server that specific client name will appear – not just “Lost a connection” how to make this happen ?
+Socket ID
+* Each socket has an ID
+* Each socket ID is mapped with a set of user data.
+& Once a socket disconnects, the corresponding user data is known, hence able to be logged.
+
+### How to make bottom label (e.g. “Techworld3g”) changed to Client’s name
+
+Session management is important
+
+### How to send file only to a certain client ?
+
+This is an illustration of how our file sharing system works when a client wants to share on the app:
+* Client: Hey server we want to send a file, I’ll slice it for you!
+* Server: Hey client i got it, send the next one
+* Client: okay heres the next part
+* Server: got it, any more?
+* Client: Heres the next part!
+* ...
+* Client: That's it! I have no more slices to give
+* Server: Okay since there's no more slices, I'll process this file then!
+Then the server will process the file and send the downloadable link to the rest of the clients.
+
+
 ## Explanation
 
 On this section, we will explain the techniques that we have used to achieve our results.
