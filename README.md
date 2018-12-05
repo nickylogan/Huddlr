@@ -104,13 +104,13 @@ This is an illustration of how our file sharing system works when a client wants
 * Client: That's it! I have no more slices to give
 * Server: Okay since there's no more slices, I'll process this file then!
 
-### Diagrams
-State diagram of chat functionality
+## Diagrams
+
+### State diagram of chat functionality
 ![screenshot-state-diagram](https://raw.githubusercontent.com/Log-baseE/Huddlr/master/screenshots/listen-state-diagram.png)
 
-Flowchart of Huddlr
+### Flowchart of Huddlr
 ![screenshot-state-diagram](https://raw.githubusercontent.com/Log-baseE/Huddlr/master/screenshots/flowchart-huddlr.jpg)
-
 
 ## Explanation
 
