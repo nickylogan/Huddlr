@@ -129,7 +129,7 @@ Since Huddlr is basically a web app, this file is also responsible for setting u
 app.engine('html', mustache());
 app.set('view engine', 'html');
 ```
-Since HTTP is a stateless protocol,  this file is also responsible for sesesion management since we identify each clients based by its session. 
+Since HTTP is a stateless protocol,  this file is also responsible for session management since we identify each clients based by its session. 
 ```js
 // Set up session management middleware
 var session = expressSession({
@@ -150,7 +150,7 @@ This file is also responsible for configuring storage which is used to store all
 // Set up storage
 let storage = new Storage();
 ```
-Since we use Express which is a web application framework so that our chat application could run on a web-browser, we need to set-up the routes that will allow our app to have URLs that are accessible in thte brouwser so that the user can accses a certain functionality by accessing the specific URL which leads to a specific file in the server.
+Since we use Express which is a web application framework so that our chat application could run on a web-browser, we need to set-up the routes that will allow our app to have URLs that are accessible in the browser so that the user can access a certain functionality by accessing the specific URL which leads to a specific file in the server.
 ```js
 // Set up routes
 let routes = new AppController(storage, ip, port).intitialize();
