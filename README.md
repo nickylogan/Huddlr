@@ -26,11 +26,14 @@ npm install --global windows-build-tools
 npm install
 ```
 
+**_IMPORTANT!!!_**
+Before running the application, you may want to change the ip address used for the server. This is set up in `src/server/index.js`. If you plan on testing it locally, leave it as 'localhost'. _However_, if you want to test it on a local network, change the ip address into your ip address **on the network**. You can find this by running `ipconfig` (Windows) or `ifconfig` (Linux), and find the correct network interface.
+
 When done, make sure you have all the prerequisites installed and you are connected to the internet, then execute the following comand and the app should be working fine and dandy :smile::
 
 ```sh
 $ npm start
-Listening on localhost:3000
+Listening on [ip-addr]:3000
 ```
 
 Now just open your favorite web browser and type the ip address of the server and voilà it works!
@@ -699,6 +702,10 @@ Besides working as a team, we also learned a few technical skills, namely:
 * [Node.js](https://nodejs.org/) - Node.js
 * [npm](https://www.npmjs.com/) - npm
 * [Express](https://expressjs.com/) - ExpressJs
+
+## Support
+
+Should any errors occur, please open an issue [here](https://github.com/Log-baseE/Huddlr/issues)
 
 ## License
 
