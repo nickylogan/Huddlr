@@ -313,7 +313,7 @@ Therefore there are four important methods that we have created:
         });
         ```
 * storeFileSlice()
-    * This method is used for the file transfer functionalities of the chat application. There are two parts of this method because the process of transfering files requires us to slice a file into smaller files and send the slices one by one to the server (hence the name storeFileSlice()). Therefore we decided to store the slices into 100,000bytes for each file (explained in greater detail in the storage.js file explanation below).
+    * This method is used for the file transfer functionalities of the chat application. There are two parts of this method because the process of transfering files requires us to slice a file into smaller files and send the slices one by one to the server (hence the name storeFileSlice()). Therefore we decided to store the slices into 100,000 bytes for each file (explained in greater detail in the storage.js file explanation below).
 
     * The first part is to check if the file is complete. This means that this only happens once there are no more slices left for the file. If it is complete then it will finalize the file.
         ```js
@@ -384,7 +384,7 @@ broadcastServerLog(log) {
 ```
 #### storage.js
 
-This file essentially sets up the storage management system that we have designed for our application. Since we do not use a database to store our files because we value privacy, we store everything as variables. So the all of the chats, users, logs, and other data that is communicated between clients and users are only stored temporarilly as variables and logs are stored as arrays. This means if we terminate the server, these variables are cleared up and not saved on the server.
+This file essentially sets up the storage management system that we have designed for our application. Since we do not use a database to store our files because we value privacy, we store everything as variables. So the all of the chats, users, logs, and other data that is communicated between clients and users are only stored temporarily as variables and logs are stored as arrays. This means if we terminate the server, these variables are cleared up and not saved on the server.
 ```js
 let Storage = function () {
     var users = {};
