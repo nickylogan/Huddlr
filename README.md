@@ -84,7 +84,7 @@ Server rebroadcasts message to the rest of the clients in the room
 
 ### When certain client disconnect then in Server that specific client name will appear – not just “Lost a connection” how to make this happen ?
 Socket ID
-* Each socket has an ID
+* Each socket has an ID.
 * Each socket ID is mapped with a set of user data.
 & Once a socket disconnects, the corresponding user data is known, hence able to be logged.
 
@@ -263,7 +263,7 @@ This javascript file is responsible to setup the socket for the server's world c
         return this;
     }
 ```
-There are always two sockets, one for the client and one for the server. The client's socket is in the browser, and the server's socket is the Node.js server itself. Therefore this chatSocket.js is used only for setting up the server socket. Since socket.io is event based, if there is an event it will do something. When it doesn't it actually is listening for events. Socket.io allows us to also communicate to a specific socket. In this case, we have set it up so that if there are any messages such as for sending file/disconnect/connect/ and any other communications it is broadcasted to the server.
+There are always two sockets, one for the client and one for the server. The client's socket is in the browser, and the server's socket is the Node.js server itself. Therefore this chatSocket.js is used only for setting up the server socket. Since socket.io is event based, if there is an event it will do something. When it doesn't, it actually is listening for events. Socket.io allows us to also communicate to a specific socket. In this case, we have set it up so that if there are any messages such as for sending file/disconnect/connect/ and any other communications it is broadcasted to the server.
 
 Therefore there are four important methods that we have created:
 * broadcastChatMessage()
@@ -373,7 +373,7 @@ export default class ServerSocket {
         this.broadcastServerLog.bind(this);
     }
 ```
-Other than that, it keeps a log of all information and broadcasts and emits it. This broadcast method is not a method that we have created that acts as a callback to be called by all other methods (connect message/disconnect message etc.) so that the server socket can emit this
+Other than that, it keeps a log of all information and broadcasts and emits it. This broadcast method is not a method that we have created that acts as a callback to be called by all other methods (connect message/disconnect message etc.) so that the server socket can emit this.
 
 ```js
 broadcastServerLog(log) {
@@ -402,7 +402,7 @@ let Storage = function () {
         slice: 0,
     };
 ```
-This storage.js file is also responsible for handling all the file transfer functionalities on our app. Since the best way to send files across devices is to slice bigger files into smaller files and send the slices one by one to the server, we decided to slice it to 100,000bytes for each file.
+This storage.js file is also responsible for handling all the file transfer functionalities on our app. Since the best way to send files across devices is to slice bigger files into smaller files and send the slices one by one to the server, we decided to slice it to 100,000 bytes for each file.
 
 This is an illustration of how our file sharing system works when a client wants to share on the app:
 * Client: Hey server we want to send a file, I’ll slice it for you!
@@ -422,7 +422,7 @@ This is the part of the code that slices the file.
         return result;
     }
 ```
-This part stores each slice of file
+This part stores each slice of file.
 ```js
  this.storeFileSlice = (data) => {
         if (!files[data.name]) {
@@ -438,7 +438,7 @@ This part stores each slice of file
         files[data.name].slice++;
     }
 ```
-This is the part of the code that finalizes the file once all the slices are sent to the server. Once it is finalized to load the file, the URL of the file is broadcasted so that the user can download the file directly form a new specific link that it gets it from the server
+This is the part of the code that finalizes the file once all the slices are sent to the server. Once it is finalized to load the file, the URL of the file is broadcasted so that the user can download the file directly form a new specific link that it gets it from the server.
 ```js
 this.finalizeFile = (name) => {
     var fileBuffer = Buffer.concat(files[name].data);
@@ -465,7 +465,7 @@ This page contains all the javascript needed for the functionalities of the user
 
 This javascript file handles all the front-end elements of the chat user interface and also manages some of the essential back-end elements. This means it handles all events for chat, if there is a new message, a new file, etc. 
 
-At the beginning of this javascript file, it will first initialize the UI. This means that it adds all the neccessary listeners for the elements that are present in our UI which we can see in the views folder. However to do that, it needs a socket so it gets it from the ClientSocket class that we have created because this socket is used to handle the transmission of messages. 
+At the beginning of this javascript file, it will first initialize the UI. This means that it adds all the necessary listeners for the elements that are present in our UI which we can see in the views folder. However to do that, it needs a socket so it gets it from the ClientSocket class that we have created because this socket is used to handle the transmission of messages. 
 ```js
 /**
  * @param {ClientSocket} socket;
@@ -499,7 +499,7 @@ this.initialize = () => {
         ...
           
 ```
-Functionality such as sending message is also available in this javascript file which mbasically gets the message input from the form on the user interface, clears  it, and then appends it with user information such as the user name, message, time, and user color before actually sending the message
+Functionality such as sending message is also available in this javascript file which basically gets the message input from the form on the user interface, clears  it, and then appends it with user information such as the user name, message, time, and user color before actually sending the message
 ```js
 this.sendMessage = () => {
     let msg = this.getMessageInput();
@@ -538,7 +538,7 @@ this.removeUser = (data) => {
         ...
 ```
 
-This file also contains the send file or file sharing functionality of our application which lets a user browse their device and then upload a file which will then be sliced into smaller parts of 100,000bytes before being sent one by one to the server. At the same time, on the UI side this file also provides the functionality for the progress bar. Not only that but it also provides the downloading functionality so that the user can actually access the file to download it from the server while also providing a progress bar for feedback
+This file also contains the send file or file sharing functionality of our application which lets a user browse their device and then upload a file which will then be sliced into smaller parts of 100,000bytes before being sent one by one to the server. At the same time, on the UI side this file also provides the functionality for the progress bar. Not only that but it also provides the downloading functionality so that the user can actually access the file to download it from the server while also providing a progress bar for feedback.
 ```js
 /**
      * @param {File} file
@@ -573,7 +573,7 @@ This file also contains the send file or file sharing functionality of our appli
 ```
 
 #### clientSocket.js
-Everything that depends on Socket.io for the client is configured here including the chat or sendMessage functionality. This is done by the sendMessage() method which is responsible for broadcasting the message to the server. Basically chatting/sending a message between the client and the server works like this: A client will emmit a message that will then be sent to the client, the server listens for the event chatMessage, the chatSocket in the server will receive it. So it works by sending the message to the server first and then the server sends it to the rest of the other clients
+Everything that depends on Socket.io for the client is configured here including the chat or sendMessage functionality. This is done by the sendMessage() method which is responsible for broadcasting the message to the server. Basically chatting/sending a message between the client and the server works like this: A client will emmit a message that will then be sent to the client, the server listens for the event chatMessage, the chatSocket in the server will receive it. So it works by sending the message to the server first and then the server sends it to the rest of the other clients.
 ```js
     this.sendMessage = function (message) {
         socket.emit(events.CHAT_MESSAGE, message);
