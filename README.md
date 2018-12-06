@@ -13,12 +13,16 @@
 ### Prerequisites
 
 Make sure that [npm](https://www.npmjs.com/) and [Node.js](https://nodejs.org/en/) are installed on your computer and that you have [Python](https://www.python.org/) installed.
+
 ### Setting up
 
 Before starting up the application, open your downloaded folder and install all the dependencies by running:
 
 ```sh
-npm install --global windows-build-tools
+# Prerequisite only for windows users. This is optional, but should an error about node-gyp occur, you may want to run this.
+npm install --global windows-build-tools 
+
+# Install required dependencies
 npm install
 ```
 
@@ -670,6 +674,25 @@ The work is divided into four large parts: the socket programming itself (includ
 - File transfer: Nicky
 - User interface: Davis + Nicky
 And finishing touches :D
+
+### Lesson learned
+
+#### Working as a team
+
+We learned a lot about teamwork this time. Given the limited time and resources, we are able to successfully create a chat application:
+
+- Time management
+- Prototyping: to give a better direction of the project.
+- Project management
+- GitHub documentation
+
+#### Technical
+
+Besides working as a team, we also learned a few technical skills, namely:
+
+- Socket programming and its uses
+- Accessing another computer in the same network
+- Segmented file transfer
 
 ## Built With
 * [Socket.io](https://socket.io/) - Socket.io
