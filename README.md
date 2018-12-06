@@ -654,7 +654,15 @@ This page is a simple page that allows a client to view the server's logs and th
 
 ---
 
-## Work Division
+## Other schtuff
+
+### Handshaking
+
+Since socket.io is built on top of websocket and HTTP requests, three-way handshaking is used. This can be proven in Wireshark when the client first connected. As you can see, SYN, SYNACK, and ACK is present.
+
+![Wireshark screenshot](https://i.imgur.com/P8F68hw.png)
+
+### Work Division
 
 The work is divided into four large parts: the socket programming itself (including chat messages), storage and session management, file transfer, and user interface. Below is the corresponding responsible members:
 - Socket + chat: James + Yefta
@@ -668,6 +676,7 @@ And finishing touches :D
 * [Node.js](https://nodejs.org/) - Node.js
 * [npm](https://www.npmjs.com/) - npm
 * [Express](https://expressjs.com/) - ExpressJs
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
