@@ -654,6 +654,15 @@ This page is a simple page that allows a client to view the server's logs and th
 
 ---
 
+## Work Division
+
+The work is divided into four large parts: the socket programming itself (including chat messages), storage and session management, file transfer, and user interface. Below is the corresponding responsible members:
+- Socket + chat: James + Yefta
+- Storage and session management: Madeleine + Nadya
+- File transfer: Nicky
+- User interface: Davis + Nicky
+And finishing touches :D
+
 ## Built With
 * [Socket.io](https://socket.io/) - Socket.io
 * [Node.js](https://nodejs.org/) - Node.js
