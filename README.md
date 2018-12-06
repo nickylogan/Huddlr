@@ -353,7 +353,7 @@ This class is basically the same as above however instead it connects users into
 #### serverSocket.js
 
 This serverSocket.js file basically just sets up the server's socket using Socket.io. 
-blabla
+
 ```js
 import Server from 'socket.io';
 import Storage from './storage';
