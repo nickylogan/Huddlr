@@ -107,7 +107,7 @@ This is an illustration of how our file sharing system works when a client wants
 ## Diagrams
 
 ### State diagram of chat functionality
-![screenshot-state-diagram](https://raw.githubusercontent.com/Log-baseE/Huddlr/master/screenshots/listen-state-diagram.png)
+![screenshot-state-diagram](https://raw.githubusercontent.com/Log-baseE/Huddlr/master/screenshots/screenshot-state-diagram.png)
 
 ### Flowchart of Huddlr
 ![screenshot-state-diagram](https://raw.githubusercontent.com/Log-baseE/Huddlr/master/screenshots/flowchart-huddlr.png)
