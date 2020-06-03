@@ -23,7 +23,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.7",
     "@fortawesome/free-regular-svg-icons": "^5.4.2",
     "@fortawesome/free-solid-svg-icons": "^5.4.2",
-    "bootstrap": "^4.1.3",
+    "bootstrap": "^4.3.1",
     "cookie-parser": "^1.4.3",
     "dropify": "^0.2.2",
     "express": "^4.16.4",
