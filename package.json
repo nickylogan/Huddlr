@@ -31,7 +31,7 @@
     "file-icons-js": "github:websemantics/file-icons-js",
     "filesize": "^3.6.1",
     "ip": "^1.1.5",
-    "jquery": "^3.3.1",
+    "jquery": "^3.5.0",
     "md5": "^2.2.1",
     "mmmagic": "^0.5.2",
     "mustache-express": "^1.2.8",
