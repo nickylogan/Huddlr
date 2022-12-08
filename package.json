@@ -26,7 +26,7 @@
     "bootstrap": "^4.3.1",
     "cookie-parser": "^1.4.3",
     "dropify": "^0.2.2",
-    "express": "^4.16.4",
+    "express": "^4.18.2",
     "express-session": "^1.15.6",
     "file-icons-js": "github:websemantics/file-icons-js",
     "filesize": "^3.6.1",
